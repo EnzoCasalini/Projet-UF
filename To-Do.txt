@@ -1,0 +1,24 @@
+-> APPLICATION
+
+// Hugo
+- Header
+- Page Home
+    - SearchBar
+    - Le jeu du jour
+    - Liste des jeux
+    - Filtres
+
+// Enzo
+- Navigation
+- Page Details
+    - Description
+    - Note du jeu
+    - Liste des commentaires
+    - Formulaire de commentaire
+
+
+- Page Wishlist
+- Page ToCome
+- Page Profile
+- Page Login
+- Page Register
