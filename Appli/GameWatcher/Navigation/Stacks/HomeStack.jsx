@@ -4,7 +4,7 @@ import HomePage from "../Pages/HomePage/HomePage";
 
 
 const Stack = createNativeStackNavigator();
-const homeScreenName = "HomeScreen";
+const homeScreenName = "Home";
 
 const HomeStack = () => {
 

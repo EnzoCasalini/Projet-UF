@@ -11,9 +11,9 @@ import IncomingStack from "./Stacks/IncomingStack";
 
 
 // Pages name
-const homePage = "Home";
-const incomingPage = "Incoming";
-const wishlistPage = "Wishlist";
+const homePage = "HomePage";
+const incomingPage = "IncomingPage";
+const wishlistPage = "WishlistPage";
 
 const Tab = createBottomTabNavigator();
 

@@ -4,7 +4,7 @@ import IncomingPage from "../Pages/IncomingPage/IncomingPage";
 
 
 const Stack = createNativeStackNavigator();
-const incomingScreenName = "IncomingScreen";
+const incomingScreenName = "Incoming";
 
 const IncomingStack = () => {
 

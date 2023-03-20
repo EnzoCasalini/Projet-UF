@@ -4,7 +4,7 @@ import WishlistPage from "../Pages/WishlistPage/WishlistPage";
 
 
 const Stack = createNativeStackNavigator();
-const wishlistScreenName = "WishlistScreen";
+const wishlistScreenName = "Wishlist";
 
 const WishlistStack = () => {
 
