@@ -1,16 +1,16 @@
-import {Dimensions, Image, StyleSheet, View} from "react-native";
+import {Dimensions, Image, StyleSheet, TouchableOpacity} from "react-native";
 import React from "react";
 
 
-const GameCover = ({cover}) => (
-    <View style={styles.game}>
+const GameCover = ({cover, onPress}) => (
+    <TouchableOpacity style={styles.game} onPress={onPress}>
         <Image
             source={{
                 uri: cover,
             }}
             style={styles.image}
         />
-    </View>
+    </TouchableOpacity>
 );
 
 const width = Dimensions.get("window").width - 40;

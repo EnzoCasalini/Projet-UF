@@ -1,8 +1,10 @@
 import React from 'react';
-import {StyleSheet, FlatList, View} from 'react-native';
+import {StyleSheet, FlatList, View, TouchableOpacityComponent, TouchableOpacity} from 'react-native';
 import GameCover from "./GameCover/GameCover";
 
-const HomePage = () => {
+const HomePage = ({navigation}) => {
+
+    const goTo = () => navigation.navigate("Details");
 
     const games = [
         {
@@ -79,7 +81,7 @@ const HomePage = () => {
                 numColumns={2}
                 columnWrapperStyle={{justifyContent: "space-around", marginBottom: 15}}
                 keyExtractor={item => item.id.toString()}
-                renderItem={({item}) => <GameCover cover={item.cover} />}
+                renderItem={({item}) => <GameCover cover={item.cover} onPress={goTo} />}
             />
         </View>
     );
