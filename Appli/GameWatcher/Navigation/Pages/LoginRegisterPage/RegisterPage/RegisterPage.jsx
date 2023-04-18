@@ -1,12 +1,30 @@
 import React from 'react';
-import {StyleSheet, SafeAreaView, Text, TextInput, View, Pressable} from 'react-native';
-import {SafeAreaProvider} from "react-native-safe-area-context";
+import {StyleSheet, Text, TextInput, View, Pressable} from 'react-native';
 
-const RegisterPage = () => {
+const RegisterPage = ({navigation}) => {
     const [username, onChangeUsername] = React.useState('');
     const [email, onChangeEmail] = React.useState('');
     const [password, onChangePassword] = React.useState('');
     const [confirmPassword, onChangeConfirmPassword] = React.useState('');
+
+    const handleRegister= () => {
+        navigation.navigate('Home');
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Home' }],
+        });
+    }
+
+    const goToLogin = () => navigation.navigate('Login');
+
+    const goToHome = () => {
+        navigation.navigate('Home');
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Home' }],
+        });
+    }
+
     return (
         <View style={styles.loginPage}>
             <Text style={styles.loginTitle}>Inscription</Text>
@@ -34,14 +52,14 @@ const RegisterPage = () => {
                 value={confirmPassword}
                 placeholder="Confirmer le mot de passe"
             />
-            <Pressable style={styles.loginButton}>
+            <Pressable style={styles.loginButton} onPress={handleRegister}>
                 <Text>Se connecter</Text>
             </Pressable>
             <View style={styles.loginBottomButton}>
-                <Pressable>
+                <Pressable onPress={goToLogin}>
                     <Text>Creer un compte</Text>
                 </Pressable>
-                <Pressable>
+                <Pressable onPress={goToHome}>
                     <Text>Continuer en tant qu'invité</Text>
                 </Pressable>
             </View>

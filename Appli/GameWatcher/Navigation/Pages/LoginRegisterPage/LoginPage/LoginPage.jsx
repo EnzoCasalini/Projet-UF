@@ -1,10 +1,29 @@
 import React from 'react';
-import {StyleSheet, SafeAreaView, Text, TextInput, View, Pressable} from 'react-native';
-import {SafeAreaProvider} from "react-native-safe-area-context";
+import {StyleSheet, Text, TextInput, View, Pressable} from 'react-native';
 
-const LoginPage = () => {
+const LoginPage = ({navigation}) => {
     const [email, onChangeEmail] = React.useState('');
     const [password, onChangePassword] = React.useState('');
+
+    const handleLogin = () => {
+        navigation.navigate('Home');
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Home' }],
+        });
+
+    }
+
+    const goToRegister = () => navigation.navigate('Register');
+
+    const goToHome = () => {
+        navigation.navigate('Home');
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Home' }],
+        });
+    }
+
     return (
         <View style={styles.loginPage}>
             <Text style={styles.loginTitle}>Connexion</Text>
@@ -20,14 +39,14 @@ const LoginPage = () => {
                 value={password}
                 placeholder="Mot de passe"
             />
-            <Pressable style={styles.loginButton}>
+            <Pressable style={styles.loginButton} onPress={handleLogin}>
                 <Text>Se connecter</Text>
             </Pressable>
             <View style={styles.loginBottomButton}>
-                <Pressable>
+                <Pressable onPress={goToRegister}>
                     <Text>Creer un compte</Text>
                 </Pressable>
-                <Pressable>
+                <Pressable onPress={goToHome}>
                     <Text>Continuer en tant qu'invité</Text>
                 </Pressable>
             </View>
@@ -64,7 +83,6 @@ const styles = StyleSheet.create({
         margin: 50,
     },
     loginBottomButton: {
-        bottom: '10%',
         alignItems: 'center',
     },
 });

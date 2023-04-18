@@ -1,10 +1,10 @@
 import {NavigationContainer} from "@react-navigation/native";
-import TabNavigator from "./Navigation/TabNavigator";
+import LoginRegisterStack from "./Navigation/Stacks/LoginRegisterStack";
 
 export default function App() {
   return (
       <NavigationContainer>
-        <TabNavigator />
+        <LoginRegisterStack />
       </NavigationContainer>
   );
 }
