@@ -31,7 +31,8 @@ const TabNavigator = () => {
                             position: "absolute",
                             elevation: 0,
                             backgroundColor: "#FFFFFF",
-                            borderRadius: 40,
+                            borderTopLeftRadius: 40,
+                            borderTopRightRadius: 40,
                             height: 90,
                             ...styles.shadow
                         },
