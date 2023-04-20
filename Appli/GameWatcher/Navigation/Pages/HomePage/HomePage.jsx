@@ -86,6 +86,7 @@ const HomePage = ({navigation}) => {
             <FlatList
                 data={games}
                 numColumns={2}
+                contentContainerStyle={{paddingBottom: 80, paddingTop: 10}}
                 columnWrapperStyle={{justifyContent: "space-around", marginBottom: 15}}
                 keyExtractor={item => item.id.toString()}
                 renderItem={({item}) => <GameCover cover={item.cover} onPress={() => navigation.navigate("Details", {game: item})} />}
@@ -100,9 +101,8 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         paddingHorizontal: 16,
-        paddingTop: 10,
-        paddingBottom: 90,
         zIndex: 1,
+        backgroundColor: "#242429"
     },
 });
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Pages
@@ -24,28 +24,33 @@ const TabNavigator = () => {
             screenOptions={({ route }) => ({
                     headerShown: false,
                     tabBarShowLabel: false,
-                    tabBarActiveTintColor: "#FF77AC",
-                    tabBarInactiveTintColor: "#004A8A",
-                    tabBarStyle: [
-                        {
-                            position: "absolute",
-                            elevation: 0,
-                            backgroundColor: "#FFFFFF",
-                            borderTopLeftRadius: 40,
-                            borderTopRightRadius: 40,
-                            height: 90,
-                            ...styles.shadow
-                        },
-                    ]
+                    tabBarActiveTintColor: "#4EF5B9",
+                    tabBarInactiveTintColor: "#C9FAE8",
+                    tabBarStyle: {
+                        position: "absolute",
+                        height: 90,
+                        borderTopRightRadius: 40,
+                        borderTopLeftRadius: 40,
+                        borderTopWidth: 0,
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        backgroundColor: "#302F37",
+                        opacity: 0.98,
+                    },
                 }
             )}
         >
 
             <Tab.Screen name={wishlistPage} component={WishlistStack} options={{
                 tabBarIcon: ({ focused, color}) => (
-                    <View style={{alignItems: "center", justifyContent: "center", top: 10}}>
-                        <Ionicons name={focused ? "md-heart" : "md-heart-outline"} color={color} size={32} />
-                        <Text style={{color: focused ? "#FF77AC" : "#004A8A", fontSize: 12}}>Wishlist</Text>
+                    <View style={{
+                        alignItems: "center",
+                        justifyContent: "center",
+                        top: 10,
+                    }}>
+                        <Ionicons name={focused ? "md-heart" : "md-heart-outline"} color={color} size={32} style={styles.shadow}/>
+                        <Text style={{color: focused ? "#4EF5B9" : "#C9FAE8", fontSize: 12}}>Wishlist</Text>
                     </View>
                 )
             }}
@@ -54,8 +59,8 @@ const TabNavigator = () => {
             <Tab.Screen name={homePage} component={HomeStack} options={{
                 tabBarIcon: ({ focused, color}) => (
                     <View style={{alignItems: "center", justifyContent: "center", top: 10}}>
-                        <Ionicons name={focused ? "home" : "home-outline"} color={color} size={32} />
-                        <Text style={{color: focused ? "#FF77AC" : "#004A8A", fontSize: 12}}>Home</Text>
+                        <Ionicons name={focused ? "home" : "home-outline"} color={color} size={32} style={styles.shadow}/>
+                        <Text style={{color: focused ? "#4EF5B9" : "#C9FAE8", fontSize: 12}}>Home</Text>
                     </View>
                 )
             }}
@@ -64,8 +69,8 @@ const TabNavigator = () => {
             <Tab.Screen name={incomingPage} component={IncomingStack} options={{
                 tabBarIcon: ({ focused, color}) => (
                     <View style={{alignItems: "center", justifyContent: "center", top: 10}}>
-                        <Ionicons name={focused ? "calendar" : "calendar-outline"} color={color} size={32} />
-                        <Text style={{color: focused ? "#FF77AC" : "#004A8A", fontSize: 12}}>Incoming</Text>
+                        <Ionicons name={focused ? "calendar" : "calendar-outline"} color={color} size={32} style={styles.shadow}/>
+                        <Text style={{color: focused ? "#4EF5B9" : "#C9FAE8", fontSize: 12}}>Incoming</Text>
                     </View>
                 )
             }}
@@ -77,14 +82,13 @@ const TabNavigator = () => {
 
 const styles = StyleSheet.create({
     shadow: {
-        shadowColor: "#004A8F",
+        shadowColor: "#4EF5B9",
         shadowOffset: {
             width: 0,
-            height: -2,
+            height: 2,
         },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.5,
-        elevation: 5,
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
     }
 });
 
