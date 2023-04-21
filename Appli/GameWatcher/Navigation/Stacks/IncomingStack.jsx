@@ -1,10 +1,10 @@
 import React from "react";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
+
+// Pages
 import IncomingPage from "../Pages/IncomingPage/IncomingPage";
-import Notification from "../AppHeader/Notification/Notification";
-import Profile from "../AppHeader/Profile/Profile";
-import Logo from "../AppHeader/Logo/Logo";
 import ProfilePage from "../Pages/ProfilePage/ProfilePage";
+import AppHeader from "../AppHeader/AppHeader";
 
 
 const Stack = createNativeStackNavigator();
@@ -18,12 +18,11 @@ const IncomingStack = () => {
             <Stack.Screen name={incomingScreenName} component={IncomingPage} options={
                 ({navigation}) => {
                     return {
-                        headerLeft: () => <Notification/>,
-                        headerRight: () => <Profile navigation={navigation}/>,
-                        headerTitle: () => <Logo/>,
+                        header: () => (
+                            <AppHeader navigation={navigation} />
+                        ),
                     };
                 }
-
             }/>
             <Stack.Screen name={profileScreenName} component={ProfilePage} />
         </Stack.Navigator>

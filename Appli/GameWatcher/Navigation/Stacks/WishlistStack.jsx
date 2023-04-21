@@ -1,10 +1,10 @@
 import React from "react";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
+
+// Pages
 import WishlistPage from "../Pages/WishlistPage/WishlistPage";
-import Notification from "../AppHeader/Notification/Notification";
-import Profile from "../AppHeader/Profile/Profile";
-import Logo from "../AppHeader/Logo/Logo";
 import ProfilePage from "../Pages/ProfilePage/ProfilePage";
+import AppHeader from "../AppHeader/AppHeader";
 
 
 const Stack = createNativeStackNavigator();
@@ -18,9 +18,9 @@ const WishlistStack = () => {
             <Stack.Screen name={wishlistScreenName} component={WishlistPage} options={
                 ({navigation}) => {
                     return {
-                        headerLeft: () => <Notification/>,
-                        headerRight: () => <Profile navigation={navigation}/>,
-                        headerTitle: () => <Logo/>,
+                        header: () => (
+                            <AppHeader navigation={navigation} />
+                        ),
                     };
                 }
 
