@@ -91,19 +91,26 @@ const HomePage = ({navigation}) => {
     ];
 
     const [searchText, setSearchText] = useState('')
+    const [sortOption, setSortOption] = useState('');
 
     const handleSearchText = (search) => {
-        setSearchText(search)
+        setSearchText(search);
+        setSortOption('');
+    }
+
+    const onSort = (option) => {
+        setSortOption(option);
+        setSearchText('');
     }
 
 
     return (
         <View style={styles.gamesContainer}>
             <View style={styles.searchContainer}>
-                <SearchBar onSearch={handleSearchText}/>
-                <FilterButton />
+                <SearchBar searchText={searchText} onSearch={handleSearchText}/>
+                <FilterButton onSort={onSort}/>
             </View>
-            <GameList games={games} searchText={searchText} navigation={navigation}/>
+            <GameList games={games} searchText={searchText} sortOption={sortOption} navigation={navigation}/>
         </View>
     );
 };

@@ -1,33 +1,24 @@
-import {StyleSheet, Text, TextInput, View} from 'react-native';
-import {useEffect, useState} from "react";
+import {StyleSheet, TextInput, View} from 'react-native';
+import {useState} from "react";
 
-const SearchBar = ({onSearch}) => {
+const SearchBar = ({ searchText, onSearch }) => {
 
-    const [search, setSearch] = useState('');
     const [borderColor, setBorderColor] = useState('#C9FAE8');
-    const [isFocused, setIsFocused] = useState(false);
 
     const handleFocus = () => {
         setBorderColor('#4EF5B9');
-        setIsFocused(true);
     };
 
     const handleBlur = () => {
         setBorderColor('#C9FAE8');
-        setIsFocused(false);
     };
-
-    const handleSearch = (text) => {
-        setSearch(text);
-        onSearch(text);
-    }
 
     return (
         <View style={[styles.searchBar, styles.shadow ,{borderColor: borderColor}]}>
             <TextInput
                 placeholder="Rechercher un jeu..."
-                value={search}
-                onChangeText={handleSearch}
+                value={searchText}
+                onChangeText={onSearch}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 placeholderTextColor="#7E8A84"

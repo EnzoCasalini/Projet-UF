@@ -1,23 +1,51 @@
 import {FlatList} from 'react-native';
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import GameCover from "./GameCover/GameCover";
 
-const GameList = ({games, searchText, navigation}) => {
-    const [filteredGameList, setFilteredGameList] = useState(games);
+const GameList = ({games, searchText, sortOption, navigation}) => {
 
-    useEffect(() => {
-        if (searchText !== '') {
-            const filteredGames = games.filter((game) => {
-                return game.name.toLowerCase().startsWith(searchText.trim().toLowerCase());
-            });
-
-            setFilteredGameList(filteredGames);
-        } else {
-            setFilteredGameList(games);
+    const filteredGameList = useMemo(() => {
+        let filteredGames = games;
+        if (searchText) {
+            filteredGames = games.filter((game) => game.name.toLowerCase().startsWith(searchText.trim().toLowerCase()));
         }
-    }, [searchText, games]);
+        else if (sortOption) {
+            switch (sortOption) {
+                case 'name_asc':
+                    filteredGames = [...filteredGames].sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'name_desc':
+                    filteredGames = [...filteredGames].sort((a, b) => b.name.localeCompare(a.name));
+                    break;
+                case 'date_asc':
+                    filteredGames = [...filteredGames].sort((a, b) => new Date(a.releaseDate.split('/').reverse().join('-')) - new Date(b.releaseDate.split('/').reverse().join('-')));
+                    break;
+                case 'date_desc':
+                    filteredGames = [...filteredGames].sort((a, b) => new Date(b.releaseDate.split('/').reverse().join('-')) - new Date(a.releaseDate.split('/').reverse().join('-')));
+                    break;
+                case 'platform_pc':
+                    filteredGames = games.filter((game) => game.platforms.includes('PC'));
+                    break;
+                case 'platform_xbox':
+                    filteredGames = games.filter((game) => game.platforms.includes('Xbox'));
+                    break;
+                case 'platform_playstation':
+                    filteredGames = games.filter((game) => game.platforms.includes('PlayStation'));
+                    break;
+                case 'platform_switch':
+                    filteredGames = games.filter((game) => game.platforms.includes('Nintendo Switch'));
+                    break;
+                default:
+                    break;
+            }
+        }
+        else {
+            filteredGames = [...filteredGames].sort((a, b) => a.name.localeCompare(b.name));
+        }
+        return filteredGames;
+    }, [searchText, games, sortOption]);
 
-    return (
+        return (
         <FlatList
             data={filteredGameList}
             numColumns={2}
