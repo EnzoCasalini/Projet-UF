@@ -103,7 +103,6 @@ const HomePage = ({navigation}) => {
         setSearchText('');
     }
 
-
     return (
         <View style={styles.gamesContainer}>
             <View style={styles.searchContainer}>

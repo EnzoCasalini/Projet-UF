@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Svg, {Path} from "react-native-svg";
 
 const FilterButton = ({ onSort }) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -10,10 +11,10 @@ const FilterButton = ({ onSort }) => {
     };
 
     const options = [
-        { name: 'Nom (ordre alphabétique)', value: 'name_asc' },
-        { name: 'Nom (inverse)', value: 'name_desc' },
-        { name: 'Date de sortie (croissant)', value: 'date_asc' },
-        { name: 'Date de sortie (décroissant)', value: 'date_desc' },
+        { name: 'Nom [A-Z]', value: 'name_asc' },
+        { name: 'Nom [Z-A]', value: 'name_desc' },
+        { name: 'Date de sortie [+ récent]', value: 'date_asc' },
+        { name: 'Date de sortie [+ ancien]', value: 'date_desc' },
         { name: 'Plateforme (PC)', value: 'platform_pc' },
         { name: 'Plateforme (Xbox)', value: 'platform_xbox' },
         { name: 'Plateforme (Playstation)', value: 'platform_playstation' },
@@ -22,8 +23,10 @@ const FilterButton = ({ onSort }) => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={() => setModalVisible(true)}>
-                <Text style={styles.filterButton}></Text>
+            <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.filterButton}>
+                <Svg fill="#C9FAE8" viewBox="0 0 40 40" strokeLinecap="round" strokeLinejoin="round" width={30} height={30} style={styles.shadow}>
+                   <Path d="M12,25l6.67,6.67a1,1,0,0,0,.7.29.91.91,0,0,0,.39-.08,1,1,0,0,0,.61-.92V13.08L31.71,1.71A1,1,0,0,0,31.92.62,1,1,0,0,0,31,0H1A1,1,0,0,0,.08.62,1,1,0,0,0,.29,1.71L11.67,13.08V24.33A1,1,0,0,0,12,25ZM3.41,2H28.59l-10,10a1,1,0,0,0-.3.71V28.59l-4.66-4.67V12.67a1,1,0,0,0-.3-.71Z" />
+                </Svg>
             </TouchableOpacity>
             <Modal
                 visible={modalVisible}
@@ -42,7 +45,7 @@ const FilterButton = ({ onSort }) => {
                                 style={styles.optionButton}
                                 onPress={() => handleSort(option.value)}
                             >
-                                <Text style={styles.optionText}>{option.name}</Text>
+                                <Text style={[styles.optionText, styles.shadow]}>{option.name}</Text>
                             </TouchableOpacity>
                         ))}
                     </View>
@@ -60,9 +63,6 @@ const styles = StyleSheet.create({
     filterButton: {
         width: 40,
         height: 40,
-        borderWidth: 2,
-        borderColor: '#C9FAE8',
-        borderRadius: 10,
         padding: 10,
     },
     button: {
@@ -76,7 +76,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.5)',
     },
     modalContainer: {
-        backgroundColor: '#fff',
+        backgroundColor: '#242429',
+        borderWidth: 1,
+        borderColor: '#4EF5B9',
+        position: 'absolute',
+        top: '16%',
+        right: 16,
+        width: '60%',
         borderRadius: 10,
         margin: 20,
         padding: 10,
@@ -86,6 +92,16 @@ const styles = StyleSheet.create({
     },
     optionText: {
         fontSize: 18,
+        color: '#C9FAE8',
+    },
+    shadow: {
+        shadowColor: "#4EF5B9",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 4,
     },
 });
 
