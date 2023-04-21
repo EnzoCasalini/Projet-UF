@@ -1,4 +1,4 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 
 const platformIcons = {
     'PC': require('./assets/PcIcon.png'),
@@ -8,11 +8,11 @@ const platformIcons = {
 };
 
 const GamePlatforms = ({platforms}) => {
-    const iconsToDisplay = platforms.map((platform) => {
+    const iconsToDisplay = platforms.map((platform, index) => {
         const icon = platformIcons[platform];
         if (icon) {
             return (
-                <View style={styles.iconContainer}>
+                <View style={styles.iconContainer} key={index}>
                     <Image key={platform} source={icon} style={{width: '100%', height: '100%'}}/>
                 </View>
             );

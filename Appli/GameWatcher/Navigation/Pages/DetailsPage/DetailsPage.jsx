@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, ScrollView, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import GameImage from "./GameImage/GameImage";
 import GameInfos from "./GameInfos/GameInfos";
 
@@ -13,8 +13,6 @@ const DetailsPage = ({ route }) => {
         </ScrollView>
     );
 };
-
-const width = Dimensions.get('window').width - 40;
 
 const styles = StyleSheet.create({
     game: {
