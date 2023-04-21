@@ -1,6 +1,8 @@
-import React from 'react';
-import {StyleSheet, FlatList, View} from 'react-native';
-import GameCover from "./GameCover/GameCover";
+import React, {useState} from 'react';
+import {StyleSheet, View} from 'react-native';
+import GameList from "./GameList/GameList";
+import SearchBar from "./SearchBar/SearchBar";
+import FilterButton from "./FilterButton/FilterButton";
 
 const HomePage = ({navigation}) => {
 
@@ -88,17 +90,20 @@ const HomePage = ({navigation}) => {
         },
     ];
 
+    const [searchText, setSearchText] = useState('')
+
+    const handleSearchText = (search) => {
+        setSearchText(search)
+    }
+
 
     return (
         <View style={styles.gamesContainer}>
-            <FlatList
-                data={games}
-                numColumns={2}
-                contentContainerStyle={{paddingBottom: 80, paddingTop: 10}}
-                columnWrapperStyle={{justifyContent: "space-around", marginBottom: 15}}
-                keyExtractor={item => item.id.toString()}
-                renderItem={({item}) => <GameCover cover={item.cover} onPress={() => navigation.navigate("Details", {game: item})} />}
-            />
+            <View style={styles.searchContainer}>
+                <SearchBar onSearch={handleSearchText}/>
+                <FilterButton />
+            </View>
+            <GameList games={games} searchText={searchText} navigation={navigation}/>
         </View>
     );
 };
@@ -107,10 +112,18 @@ const HomePage = ({navigation}) => {
 const styles = StyleSheet.create({
     gamesContainer: {
         display: "flex",
-        flexDirection: "row",
+        flexDirection: "column",
+        minHeight: "100%",
         paddingHorizontal: 16,
         zIndex: 1,
         backgroundColor: "#242429"
+    },
+    searchContainer: {
+        marginVertical: 16,
+        marginHorizontal: 8,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
 });
 
