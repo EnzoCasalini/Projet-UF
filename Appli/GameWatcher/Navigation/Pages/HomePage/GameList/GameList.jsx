@@ -1,5 +1,5 @@
 import {FlatList} from 'react-native';
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useMemo} from "react";
 import GameCover from "./GameCover/GameCover";
 
 const GameList = ({games, searchText, sortOption, navigation}) => {
@@ -18,10 +18,10 @@ const GameList = ({games, searchText, sortOption, navigation}) => {
                     filteredGames = [...filteredGames].sort((a, b) => b.name.localeCompare(a.name));
                     break;
                 case 'date_asc':
-                    filteredGames = [...filteredGames].sort((a, b) => new Date(a.releaseDate.split('/').reverse().join('-')) - new Date(b.releaseDate.split('/').reverse().join('-')));
+                    filteredGames = [...filteredGames].sort((a, b) => new Date(b.releaseDate.split('/').reverse().join('-')) - new Date(a.releaseDate.split('/').reverse().join('-')));
                     break;
                 case 'date_desc':
-                    filteredGames = [...filteredGames].sort((a, b) => new Date(b.releaseDate.split('/').reverse().join('-')) - new Date(a.releaseDate.split('/').reverse().join('-')));
+                    filteredGames = [...filteredGames].sort((a, b) => new Date(a.releaseDate.split('/').reverse().join('-')) - new Date(b.releaseDate.split('/').reverse().join('-')));
                     break;
                 case 'platform_pc':
                     filteredGames = games.filter((game) => game.platforms.includes('PC'));

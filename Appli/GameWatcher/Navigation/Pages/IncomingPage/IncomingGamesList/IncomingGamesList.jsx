@@ -1,6 +1,6 @@
 import {FlatList, StyleSheet, Text} from 'react-native';
-import GameCover from "../../HomePage/GameList/GameCover/GameCover";
 import React, {useEffect, useState} from "react";
+import GameNotReleased from "./GameNotReleased/GameNotReleased";
 
 const IncomingGamesList = ({games, navigation}) => {
     const [allGamesNotReleased, setAllGamesNotReleased] = useState(false);
@@ -30,10 +30,10 @@ const IncomingGamesList = ({games, navigation}) => {
                 <FlatList
                     data={allGamesNotReleased}
                     numColumns={2}
-                    contentContainerStyle={{paddingBottom: 210, paddingTop: 15}}
-                    columnWrapperStyle={{justifyContent: "space-around", marginBottom: 15}}
+                    contentContainerStyle={{paddingBottom: 210, paddingTop: 30}}
+                    columnWrapperStyle={{justifyContent: "space-around", marginBottom: 20}}
                     keyExtractor={item => item.id.toString()}
-                    renderItem={({item}) => <GameCover cover={item.cover} onPress={() => navigation.navigate("Details", {game: item})} />}
+                    renderItem={({item}) => <GameNotReleased cover={item.cover} onPress={() => navigation.navigate("Details", {game: item})} />}
                 />
             ) : (
                 <Text style={styles.noGameText}>Aucune sortie prévue dans les mois à venir !</Text>
