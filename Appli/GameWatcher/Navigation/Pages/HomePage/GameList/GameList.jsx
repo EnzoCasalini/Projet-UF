@@ -45,7 +45,7 @@ const GameList = ({games, searchText, sortOption, navigation}) => {
         return filteredGames;
     }, [searchText, games, sortOption]);
 
-        return (
+    return (
         <FlatList
             data={filteredGameList}
             numColumns={2}

@@ -4,11 +4,11 @@ import Logo from "./Logo/Logo";
 import Profile from "./Profile/Profile";
 import React from "react";
 
-const AppHeader = ({navigation}) => {
+const AppHeader = ({navigation, title}) => {
     return (
         <View style={styles.homeHeader}>
             <Notification />
-            <Logo />
+            <Logo title={title}/>
             <Profile navigation={navigation} />
         </View>
     );

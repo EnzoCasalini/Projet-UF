@@ -1,10 +1,10 @@
 import {Text, View, StyleSheet} from 'react-native';
 
-const Logo = () => {
+const Logo = ({title}) => {
     return (
         <View>
             <Text style={styles.title}>
-                GameWATCHER
+                {title}
             </Text>
         </View>
     );

@@ -22,12 +22,11 @@ const HomeStack = () => {
                 ({navigation}) => {
                     return {
                         header: () => (
-                            <AppHeader navigation={navigation} />
+                            <AppHeader navigation={navigation} title="GameWATCHER" />
                         ),
                     };
                 }
             }/>
-
             <Stack.Screen name={detailsScreenName} component={DetailsPage} options={
                 ({navigation}) => {
                     return {
