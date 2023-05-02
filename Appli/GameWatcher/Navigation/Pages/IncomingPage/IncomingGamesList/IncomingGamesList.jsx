@@ -33,7 +33,7 @@ const IncomingGamesList = ({games, navigation}) => {
                     contentContainerStyle={{paddingBottom: 210, paddingTop: 30}}
                     columnWrapperStyle={{justifyContent: "space-around", marginBottom: 20}}
                     keyExtractor={item => item.id.toString()}
-                    renderItem={({item}) => <GameNotReleased cover={item.cover} onPress={() => navigation.navigate("Details", {game: item})} />}
+                    renderItem={({item}) => <GameNotReleased cover={item.cover} onPress={() => navigation.navigate("Details", {game: item})} game={item} />}
                 />
             ) : (
                 <Text style={styles.noGameText}>Aucune sortie prévue dans les mois à venir !</Text>

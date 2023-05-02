@@ -1,14 +1,24 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
+import FavoriteGamesList from "./FavoriteGamesList/FavoriteGamesList";
 
-const WishlistPage = () => {
+const WishlistPage = ({navigation}) => {
     return (
-        <View>
-            <Text>
-                WishlistPage
-            </Text>
+        <View style={styles.gamesContainer}>
+            <FavoriteGamesList navigation={navigation} />
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    gamesContainer: {
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100%",
+        paddingHorizontal: 16,
+        zIndex: 1,
+        backgroundColor: "#242429"
+    },
+});
 
 export default WishlistPage;

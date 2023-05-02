@@ -1,22 +1,16 @@
-import {TouchableOpacity, View, StyleSheet} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import React, {useContext} from "react";
 import GameCover from "../../../HomePage/GameList/GameCover/GameCover";
-import {useContext, useState} from "react";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import favoriteGamesContext from "../../../../../favoriteGamesContext";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
-const GameNotReleased = ({cover, onPress, game}) => {
-    const [isFavorite, setIsFavorite] = useState(false);
-    const { addGameToFavorites, removeGameFromFavorites } = useContext(favoriteGamesContext);
-
-    const handleFavorite = (game) => {
-        setIsFavorite(!isFavorite);
-        !isFavorite ? addGameToFavorites(game) : removeGameFromFavorites(game);
-    }
+const FavoriteGame = ({cover, onPress, game}) => {
+    const { removeGameFromFavorites } = useContext(favoriteGamesContext);
 
     return (
         <View>
-            <TouchableOpacity style={styles.favoriteButton} onPress={() => handleFavorite(game)}>
-                <Ionicons name={isFavorite ? 'heart' : 'heart-outline'} size={30} color={isFavorite ? '#4EF5B9' : '#C9FAE8'} style={styles.shadow}/>
+            <TouchableOpacity style={styles.favoriteButton} onPress={() => removeGameFromFavorites(game)}>
+                <Ionicons name='heart' size={30} color='#4EF5B9' style={styles.shadow}/>
             </TouchableOpacity>
             <GameCover cover={cover} onPress={onPress} />
         </View>
@@ -51,4 +45,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default GameNotReleased;
+export default FavoriteGame;
