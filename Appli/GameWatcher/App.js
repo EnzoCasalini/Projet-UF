@@ -1,5 +1,5 @@
 import {NavigationContainer} from "@react-navigation/native";
-import TabNavigator from "./Navigation/TabNavigator";
+import LoginRegisterStack from "./Navigation/Stacks/LoginRegisterStack";
 import {useEffect, useState} from "react";
 import FavoriteGamesProvider from "./FavoriteGamesProvider";
 import gamesContext from "./gamesContext";
@@ -16,7 +16,7 @@ export default function App() {
         <NavigationContainer>
             <FavoriteGamesProvider>
                 <gamesContext.Provider value={{games}}>
-                    <TabNavigator />
+                    <LoginRegisterStack />
                 </gamesContext.Provider>
             </FavoriteGamesProvider>
         </NavigationContainer>
