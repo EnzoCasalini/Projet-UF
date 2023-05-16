@@ -18,10 +18,10 @@ const GameList = ({games, searchText, sortOption, navigation}) => {
                     filteredGames = [...filteredGames].sort((a, b) => b.name.localeCompare(a.name));
                     break;
                 case 'date_asc':
-                    filteredGames = [...filteredGames].sort((a, b) => new Date(b.releaseDate.split('/').reverse().join('-')) - new Date(a.releaseDate.split('/').reverse().join('-')));
+                    filteredGames = [...filteredGames].sort((a, b) => new Date(b.released.split('/').reverse().join('-')) - new Date(a.released.split('/').reverse().join('-')));
                     break;
                 case 'date_desc':
-                    filteredGames = [...filteredGames].sort((a, b) => new Date(a.releaseDate.split('/').reverse().join('-')) - new Date(b.releaseDate.split('/').reverse().join('-')));
+                    filteredGames = [...filteredGames].sort((a, b) => new Date(a.released.split('/').reverse().join('-')) - new Date(b.released.split('/').reverse().join('-')));
                     break;
                 case 'platform_pc':
                     filteredGames = games.filter((game) => game.platforms.includes('PC'));
@@ -52,7 +52,7 @@ const GameList = ({games, searchText, sortOption, navigation}) => {
             contentContainerStyle={{paddingBottom: 210}}
             columnWrapperStyle={{justifyContent: "space-around", marginBottom: 15}}
             keyExtractor={item => item.id.toString()}
-            renderItem={({item}) => <GameCover cover={item.cover} onPress={() => navigation.navigate("Details", {game: item})} />}
+            renderItem={({item}) => <GameCover cover={item.background_image} onPress={() => navigation.navigate("Details", {game: item})} />}
         />
     );
 }

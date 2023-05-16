@@ -9,7 +9,7 @@ const GameImage = ({cover}) => {
                     uri: cover,
                 }}
                 style={[styles.image]}
-                resizeMode={'stretch'} // Potentiellement ça à enlever / remettre en 'cover' pour adapter la taille de l'image.
+                resizeMode={'cover'} // Potentiellement ça à enlever / remettre en 'cover' pour adapter la taille de l'image.
             />
             <Image source={require('../assets/mask.png')} style={styles.mask} />
         </View>
