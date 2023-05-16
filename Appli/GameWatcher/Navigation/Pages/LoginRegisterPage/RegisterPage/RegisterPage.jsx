@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TextInput, View, Pressable} from 'react-native';
-import {auth} from '../../../../firebaseConfig';
+import {auth, database} from '../../../../firebaseConfig';
 import {createUserWithEmailAndPassword} from "firebase/auth";
+import {ref, push, set} from "firebase/database";
 
 const RegisterPage = ({navigation}) => {
     const [username, setUsername] = useState('');
@@ -50,10 +51,21 @@ const RegisterPage = ({navigation}) => {
         }
 
         // If form is valid, create the account
+        // If form is valid, create the account
         if (valid) {
             createUserWithEmailAndPassword(auth, email, password)
                 .then(() => {
-                    navigation.navigate('Login')
+                    const userId = auth.currentUser.uid;
+                    const userRef = push(ref(database, 'utilisateurs'), userId);
+                    set(userRef, {
+                        username: username,
+                        email: email,
+                        image: null,
+                    }).then(() => {
+                        navigation.navigate('Login');
+                    }).catch((error) => {
+                        alert(error.message);
+                    });
                 })
                 .catch((error) => {
                     alert(error.message);
