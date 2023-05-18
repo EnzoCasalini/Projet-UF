@@ -1,24 +1,29 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Svg, {Path} from "react-native-svg";
+import gamesContext from "../../../../gamesContext";
 
-const FilterButton = ({ onSort }) => {
+const FilterButton = () => {
     const [modalVisible, setModalVisible] = useState(false);
+    const { setFilterOptions: setFilterOptionsAndResetGames } = useContext(gamesContext);
+
 
     const handleSort = (option) => {
         setModalVisible(false);
-        onSort(option);
+        setFilterOptionsAndResetGames(option);
     };
 
     const options = [
-        { name: 'Nom [A-Z]', value: 'name_asc' },
-        { name: 'Nom [Z-A]', value: 'name_desc' },
-        { name: 'Date de sortie [+ récent]', value: 'date_asc' },
-        { name: 'Date de sortie [+ ancien]', value: 'date_desc' },
-        { name: 'Plateforme (PC)', value: 'platform_pc' },
-        { name: 'Plateforme (Xbox)', value: 'platform_xbox' },
-        { name: 'Plateforme (Playstation)', value: 'platform_playstation' },
-        { name: 'Plateforme (Switch)', value: 'platform_switch' },
+        { name: 'Nom [A-Z]', value: { ordering: 'name' } },
+        { name: 'Nom [Z-A]', value: { ordering: '-name' } },
+        { name: 'Date de sortie [+ récent]', value: { ordering: '-released' } },
+        { name: 'Date de sortie [+ ancien]', value: { ordering: 'released' } },
+        { name: 'Populaire (meilleures notes)', value: { ordering: '-rating' } },
+        { name: 'Populaire (le plus d\'ajouts)', value: { ordering: '-added' } },
+        { name: 'Plateforme (PC)', value: { platforms: 4 } },
+        { name: 'Plateforme (Xbox)', value: { platforms: [1, 186, 14, 80] } },
+        { name: 'Plateforme (Playstation)', value: { platforms: [187, 18, 16, 15, 27] } },
+        { name: 'Plateforme (Switch)', value: { platforms: 7 } },
     ];
 
     return (
@@ -41,7 +46,7 @@ const FilterButton = ({ onSort }) => {
                     <View style={styles.modalContainer}>
                         {options.map((option) => (
                             <TouchableOpacity
-                                key={option.value}
+                                key={option.name}
                                 style={styles.optionButton}
                                 onPress={() => handleSort(option.value)}
                             >

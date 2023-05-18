@@ -1,33 +1,23 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import GameList from "./GameList/GameList";
 import SearchBar from "./SearchBar/SearchBar";
 import FilterButton from "./FilterButton/FilterButton";
-import gamesContext from "../../../gamesContext";
 
 const HomePage = ({navigation}) => {
-    const { games } = useContext(gamesContext);
-
     const [searchText, setSearchText] = useState('')
-    const [sortOption, setSortOption] = useState('');
 
     const handleSearchText = (search) => {
         setSearchText(search);
-        setSortOption('');
-    }
-
-    const onSort = (option) => {
-        setSortOption(option);
-        setSearchText('');
     }
 
     return (
         <View style={styles.gamesContainer}>
             <View style={styles.searchContainer}>
                 <SearchBar searchText={searchText} onSearch={handleSearchText}/>
-                <FilterButton onSort={onSort}/>
+                <FilterButton/>
             </View>
-            <GameList games={games} searchText={searchText} sortOption={sortOption} navigation={navigation}/>
+            <GameList searchText={searchText} navigation={navigation}/>
         </View>
     );
 };

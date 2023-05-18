@@ -2,18 +2,19 @@ import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import GameImage from "./GameImage/GameImage";
 import GameInfos from "./GameInfos/GameInfos";
+import {fetchGame} from "../../../services/rawgApiService";
 
 const DetailsPage = ({ route }) => {
     const { game } = route.params
     const [gameInfos, setGameInfos] = useState({});
 
+    const fetchAndSetGameInfos = async () => {
+        const fetchedGameInfos = await fetchGame(game.id);
+        setGameInfos(fetchedGameInfos);
+    }
+
     useEffect(() => {
-        const fetchGame = async () => {
-            const response = await fetch(`https://api.rawg.io/api/games/${game.id}?key=e08ee0dddec9442490cf0511abf68087`)
-            const data = await response.json()
-            setGameInfos(data);
-        }
-        fetchGame();
+        fetchAndSetGameInfos();
     }, []);
 
     return (

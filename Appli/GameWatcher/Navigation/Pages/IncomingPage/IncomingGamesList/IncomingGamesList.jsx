@@ -6,7 +6,7 @@ const IncomingGamesList = ({games, navigation}) => {
     const [allGamesNotReleased, setAllGamesNotReleased] = useState(false);
 
     const checkIfGameIsReleased = (game) => {
-        const releaseDate = new Date(game.releaseDate.split('/').reverse().join('-'));
+        const releaseDate = new Date(game.released.split('/').reverse().join('-'));
         const today = new Date();
         return releaseDate <= today;
     }
