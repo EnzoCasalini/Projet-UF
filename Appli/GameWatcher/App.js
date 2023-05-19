@@ -9,7 +9,6 @@ export default function App() {
     const [games, setGames] = useState([]);
     const [nextPage, setNextPage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [filterOptions, setFilterOptions] = useState({});
     const [searchText, setSearchText] = useState("");
     const [canFetchMore, setCanFetchMore] = useState(true);
 
@@ -51,7 +50,6 @@ export default function App() {
 
     const setFilterOptionsAndResetGames = async (options) => {
         setCanFetchMore(false);
-        setFilterOptions(options);
         setSearchText("");
         setGames([]);
         try {

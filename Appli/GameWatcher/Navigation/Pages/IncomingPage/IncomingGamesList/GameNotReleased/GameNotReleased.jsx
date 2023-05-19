@@ -1,6 +1,6 @@
 import {TouchableOpacity, View, StyleSheet} from 'react-native';
 import GameCover from "../../../HomePage/GameList/GameCover/GameCover";
-import {useContext, useState} from "react";
+import {useContext} from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import favoriteGamesContext from "../../../../../favoriteGamesContext";
 
@@ -8,7 +8,7 @@ const GameNotReleased = ({cover, onPress, game}) => {
     const { addGameToFavorites, removeGameFromFavorites, isGameFavorite } = useContext(favoriteGamesContext);
 
     const handleFavorite = (game) => {
-        !isGameFavorite(game) ? addGameToFavorites(game) : removeGameFromFavorites(game);
+        //!isGameFavorite(game) ? addGameToFavorites(game) : removeGameFromFavorites(game);
     }
 
     return (

@@ -6,7 +6,7 @@ const IncomingPage = ({navigation}) => {
 
     return (
         <View style={styles.gamesContainer}>
-            {/*<IncomingGamesList navigation={navigation}/>*/}
+            <IncomingGamesList navigation={navigation}/>
         </View>
     );
 };
