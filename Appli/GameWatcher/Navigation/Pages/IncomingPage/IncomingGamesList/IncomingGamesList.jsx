@@ -1,9 +1,11 @@
 import {FlatList, StyleSheet, Text} from 'react-native';
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import GameNotReleased from "./GameNotReleased/GameNotReleased";
+import gamesContext from "../../../../gamesContext";
 
-const IncomingGamesList = ({games, navigation}) => {
+const IncomingGamesList = ({navigation}) => {
     const [allGamesNotReleased, setAllGamesNotReleased] = useState(false);
+    const { games } = useContext(gamesContext);
 
     const checkIfGameIsReleased = (game) => {
         const releaseDate = new Date(game.released.split('/').reverse().join('-'));

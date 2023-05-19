@@ -1,9 +1,20 @@
 const API_KEY = "?key=e08ee0dddec9442490cf0511abf68087";
 const BASE_URL = `https://api.rawg.io/api/games`;
 
-// Méthode qui permet de fetch les jeux depuis l'API RAWG en prenant en compte diverses options et la pagination.
-export const fetchGames = async (page, options = {}) => {
-    // On ajoute les paramètres de la requête à l'url
+// Méthode qui permet de fetch les jeux depuis l'API RAWG.
+export const fetchGames = async (url = `${BASE_URL}${API_KEY}`) => {
+    try {
+        const response = await fetch(url);
+        return await response.json();
+    }
+    catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+// Méthode qui permet de fetch un jeu avec des options depuis l'API RAWG.
+export const fetchGamesWithOption = async (page, options = {}) => {
     const params = { page_size: 20, page, ...options };
     const queryParams = Object.keys(params)
         .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
@@ -12,13 +23,7 @@ export const fetchGames = async (page, options = {}) => {
     // On crée une nouvelle URL à partir de l'URL de base et des params
     const url = `https://api.rawg.io/api/games?key=e08ee0dddec9442490cf0511abf68087&${queryParams}`;
 
-    const response = await fetch(url);
-    if (!response.ok) {
-        throw new Error(`Error status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data.results;
+    return fetchGames(url);
 }
 
 

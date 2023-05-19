@@ -5,8 +5,7 @@ import gamesContext from "../../../../gamesContext";
 
 const FilterButton = () => {
     const [modalVisible, setModalVisible] = useState(false);
-    const { setFilterOptions: setFilterOptionsAndResetGames } = useContext(gamesContext);
-
+    const { setFilterOptionsAndResetGames } = useContext(gamesContext);
 
     const handleSort = (option) => {
         setModalVisible(false);

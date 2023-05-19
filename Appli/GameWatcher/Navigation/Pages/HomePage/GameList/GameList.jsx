@@ -1,24 +1,15 @@
 import {ActivityIndicator, FlatList} from 'react-native';
-import React, {useContext, useMemo} from "react";
+import React, {useContext} from "react";
 import GameCover from "./GameCover/GameCover";
 import gamesContext from "../../../../gamesContext";
 
-const GameList = ({searchText, navigation}) => {
+const GameList = ({navigation}) => {
     const { games, fetchMoreGames, isLoading } = useContext(gamesContext);
-
-    const filteredGameList = useMemo(() => {
-        let filteredGames = games;
-        if (searchText) {
-            filteredGames = games.filter((game) => game.name.toLowerCase().startsWith(searchText.trim().toLowerCase()));
-        }
-
-        return filteredGames;
-    }, [searchText, games]);
 
     return (
         <>
             <FlatList
-                data={filteredGameList}
+                data={games}
                 numColumns={2}
                 contentContainerStyle={{paddingBottom: 210}}
                 columnWrapperStyle={{justifyContent: "space-around", marginBottom: 15}}

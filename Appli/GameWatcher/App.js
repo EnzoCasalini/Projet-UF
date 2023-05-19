@@ -3,55 +3,89 @@ import LoginRegisterStack from "./Navigation/Stacks/LoginRegisterStack";
 import {useEffect, useState} from "react";
 import FavoriteGamesProvider from "./FavoriteGamesProvider";
 import gamesContext from "./gamesContext";
-import {fetchGames} from "./services/rawgApiService";
+import {fetchGames, fetchGamesWithOption} from "./services/rawgApiService";
 
 export default function App() {
     const [games, setGames] = useState([]);
-    const [page, setPage] = useState(0);
+    const [nextPage, setNextPage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [filterOptions, setFilterOptions] = useState({});
-    const [gamesCache, setGamesCache] = useState({});
+    const [searchText, setSearchText] = useState("");
+    const [canFetchMore, setCanFetchMore] = useState(true);
 
 
     const fetchMoreGames = async () => {
+        if (!canFetchMore) return;
         setIsLoading(true);
-        const nextPage = page + 1;
-        setPage(nextPage);
-        // On crée une clé de cache qui permet de ne pas requête l'API si les données sont déjà en cache.
-        const cacheKey = JSON.stringify({page: page + 1, ...filterOptions});
-
-        if (gamesCache[cacheKey]) {
-            // Si les données sont déjà en cache, on les récupère et on les ajoute à la liste des jeux.
-            setGames(oldGames => [...oldGames, ...gamesCache[cacheKey]]);
-        } else {
+        if (nextPage !== null) {
             try {
-                // Sinon, on requête l'API et on ajoute les données à la liste des jeux.
-                const newGames = await fetchGames(page + 1, filterOptions);
-                setGames(oldGames => [...oldGames, ...newGames]);
-                setGamesCache(oldCache => ({...oldCache, [cacheKey]: newGames}));
-            } catch (error) {
+                const newGames = await fetchGames(nextPage);
+                setGames([...games, ...newGames.results]);
+                setNextPage(newGames.next);
+            }
+            catch (error) {
                 console.error(error);
-            } finally {
+            }
+            finally {
                 setIsLoading(false);
             }
         }
     }
 
-    const setFilterOptionsAndResetGames = (options) => {
+    const searchGames = async (searchText) => {
+        setIsLoading(true);
+        setSearchText(searchText);
+        try {
+            // On requête l'API avec le texte de recherche
+            const searchedGames = await fetchGamesWithOption(1, {  ordering: '-added', search: searchText });
+            // On remplace les jeux actuels par les jeux trouvés
+            setGames(searchedGames.results);
+            setNextPage(searchedGames.next);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+
+    const setFilterOptionsAndResetGames = async (options) => {
+        setCanFetchMore(false);
         setFilterOptions(options);
+        setSearchText("");
         setGames([]);
-        setPage(0);
+        try {
+            // On requête l'API avec les options de filtrage
+            const filteredGames = await fetchGamesWithOption(1, options);
+            // On remplace les jeux actuels par les jeux filtrés
+            setGames(filteredGames.results);
+            setNextPage(filteredGames.next);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setCanFetchMore(true);
+        }
     }
 
     useEffect(() => {
-        fetchMoreGames();
+        const fetchFirstGames = async () => {
+            try {
+                const firstGames = await fetchGames();
+                setGames(firstGames.results);
+                setNextPage(firstGames.next);
+            }
+            catch (e) {
+                console.error(e);
+            }
+        }
+        fetchFirstGames();
     }, []);
 
 
     return (
         <NavigationContainer>
             <FavoriteGamesProvider>
-                <gamesContext.Provider value={{games, fetchMoreGames, isLoading, setFilterOptions: setFilterOptionsAndResetGames}}>
+                <gamesContext.Provider value={{games, fetchMoreGames, isLoading, setFilterOptionsAndResetGames, searchGames, searchText, setSearchText}}>
                     <LoginRegisterStack />
                 </gamesContext.Provider>
             </FavoriteGamesProvider>
