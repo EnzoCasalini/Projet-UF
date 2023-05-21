@@ -2,12 +2,13 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 import React, {useContext, useEffect} from "react";
 import favoriteGamesContext from "../../../../favoriteGamesContext";
 import FavoriteGame from "./FavoriteGame/FavoriteGame";
+import GameCover from "../../HomePage/GameList/GameCover/GameCover";
 
 const FavoriteGamesList = ({navigation}) => {
     const { favoriteGames } = useContext(favoriteGamesContext);
-    let gamesList = [...favoriteGames]; // Copier la liste originale
+    let gamesList = [...favoriteGames]; // Copier la liste originale.
 
-    // Si le nombre de jeux est impair, ajouter un élément fantôme
+    // Si le nombre de jeux est impair, ajouter un élément fantôme.
     if (gamesList.length % 2 !== 0) {
         gamesList.push({id: 'empty', isEmpty: true});
     }
@@ -18,12 +19,12 @@ const FavoriteGamesList = ({navigation}) => {
                 <FlatList
                     data={gamesList}
                     numColumns={2}
-                    contentContainerStyle={{paddingBottom: 210, paddingTop: 30}}
-                    columnWrapperStyle={{marginBottom: 20, alignContent: 'flex-start', justifyContent: 'space-around'}}
+                    contentContainerStyle={{paddingBottom: 210, paddingTop: 20}}
+                    columnWrapperStyle={{justifyContent: "space-around", marginBottom: 15}}
                     keyExtractor={item => item.id.toString()}
-                    renderItem={({item}) => item.isEmpty ? <View style={{flex: 1}}/> : (
+                    renderItem={({item}) => item.isEmpty ? <GameCover style={{flex: 1}}/> : (
                         <FavoriteGame
-                            cover={item.cover}
+                            cover={item.background_image}
                             onPress={() => navigation.navigate("Details", {game: item})}
                             game={item}
                         />)}

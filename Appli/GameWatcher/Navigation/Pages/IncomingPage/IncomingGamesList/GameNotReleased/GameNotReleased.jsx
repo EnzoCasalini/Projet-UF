@@ -21,7 +21,7 @@ const GameNotReleased = ({cover, onPress, game}) => {
             );
             return;
         }
-        !isGameFavorite(game) ? addGameToFavorites(game, userId) : removeGameFromFavorites(game, userId);
+        !isGameFavorite(game) ? addGameToFavorites(game) : removeGameFromFavorites(game);
     }
 
     return (
