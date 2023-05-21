@@ -10,7 +10,7 @@ const LoginPage = ({navigation}) => {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
 
-    const [borderColor, setBorderColor] = useState('#C9FAE8');
+    const [focusedField, setFocusedField] = useState(null);
 
 
     const handleLogin = () => {
@@ -46,14 +46,22 @@ const LoginPage = ({navigation}) => {
         }
     }
 
-    const handleFocus = () => {
-        setEmailError('');
-        setPasswordError('');
-        setBorderColor('#4EF5B9');
+    const handleFocus = (field) => {
+        switch (field) {
+            case 'email':
+                setEmailError('');
+                break;
+            case 'password':
+                setPasswordError('');
+                break;
+            default:
+                break;
+        }
+        setFocusedField(field);
     };
 
     const handleBlur = () => {
-        setBorderColor('#C9FAE8');
+        setFocusedField(null);
     };
 
     const goToRegister = () => navigation.navigate('Register');
@@ -67,12 +75,12 @@ const LoginPage = ({navigation}) => {
 
     return (
         <View style={styles.loginPage}>
-            <Text style={styles.loginTitle}>Sign In</Text>
-            <View style={[styles.loginInputContainer, styles.shadow ,{borderColor: borderColor}, emailError && styles.loginInputError]}>
+            <Text style={styles.loginTitle}>Connexion</Text>
+            <View style={[styles.loginInputContainer, {borderColor: focusedField === 'email' ? '#4EF5B9' : '#C9FAE8'}, emailError && styles.loginInputError]}>
                 <TextInput
                     style={styles.loginInput}
                     onChangeText={setEmail}
-                    onFocus={handleFocus}
+                    onFocus={() => handleFocus('email')}
                     onBlur={handleBlur}
                     value={email}
                     placeholder="Email"
@@ -81,11 +89,11 @@ const LoginPage = ({navigation}) => {
                 />
             </View>
             <Text style={styles.loginError}>{emailError}</Text>
-            <View style={[styles.loginInputContainer, styles.shadow ,{borderColor: borderColor}, passwordError && styles.loginInputError]}>
+            <View style={[styles.loginInputContainer, {borderColor: focusedField === 'password' ? '#4EF5B9' : '#C9FAE8'}, passwordError && styles.loginInputError]}>
                 <TextInput
                     style={styles.loginInput}
                     onChangeText={setPassword}
-                    onFocus={handleFocus}
+                    onFocus={() => handleFocus('password')}
                     onBlur={handleBlur}
                     secureTextEntry={true}
                     value={password}
