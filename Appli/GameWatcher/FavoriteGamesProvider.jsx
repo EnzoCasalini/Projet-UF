@@ -1,15 +1,27 @@
 import {useState} from "react";
 import favoriteGamesContext from "./favoriteGamesContext";
 import {Alert} from "react-native";
+import {database} from "./firebaseConfig";
+import {ref, set, remove} from 'firebase/database';
+
 
 const FavoriteGamesProvider = ({ children }) => {
     const [favoriteGames, setFavoriteGames] = useState([]);
 
-    const addGameToFavorites = (game) => {
-        setFavoriteGames([...favoriteGames, game]);
+    const addGameToFavorites = (game, userId) => {
+        console.log(`game2 : ${game.id}`)
+        if (userId) {
+            const gameRef = ref(database, `utilisateurs/${userId}/favoriteGames/${game.id}`);
+            set(gameRef, {
+                id: game.id,
+                background_image: game.background_image
+            }).then(() => {
+                setFavoriteGames([...favoriteGames, game]);
+            });
+        }
     };
 
-    const removeGameFromFavorites = (game) => {
+    const removeGameFromFavorites = (game, userId) => {
         Alert.alert(
             "Supprimer des favoris",
             "Êtes-vous sûr de vouloir supprimer ce jeu de vos favoris ?",
@@ -20,7 +32,12 @@ const FavoriteGamesProvider = ({ children }) => {
                 },
                 {
                     text: "Confirmer", onPress: async () => {
-                        setFavoriteGames(favoriteGames.filter((favGame) => favGame.id !== game.id));
+                        if (userId) {
+                            const gameRef = ref(database, `utilisateurs/${userId}/favoriteGames/${game.id}`);
+                            remove(gameRef).then(() => {
+                                setFavoriteGames(favoriteGames.filter((favGame) => favGame.id !== game.id));
+                            });
+                        }
                     }
                 }
             ]

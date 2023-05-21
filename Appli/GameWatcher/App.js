@@ -12,7 +12,6 @@ export default function App() {
     const [searchText, setSearchText] = useState("");
     const [canFetchMore, setCanFetchMore] = useState(true);
 
-
     const fetchMoreGames = async () => {
         if (!canFetchMore) return;
         setIsLoading(true);

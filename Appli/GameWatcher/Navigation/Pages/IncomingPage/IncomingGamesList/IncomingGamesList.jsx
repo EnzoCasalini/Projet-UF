@@ -60,7 +60,7 @@ const IncomingGamesList = ({navigation}) => {
                     contentContainerStyle={{paddingBottom: 210, paddingTop: 20}}
                     columnWrapperStyle={{justifyContent: "space-around", marginBottom: 15}}
                     keyExtractor={item => item.id}
-                    renderItem={({item}) => <GameNotReleased cover={item.background_image} onPress={() => navigation.navigate("Details", {game: item})} />}
+                    renderItem={({item}) => <GameNotReleased cover={item.background_image} onPress={() => navigation.navigate("Details", {game: item})} game={item} />}
                     onEndReached={fetchMoreGames}
                     onEndReachedThreshold={0.5}
                     ListFooterComponent={isLoading ? <ActivityIndicator size="large" color="#C9FAE8" style={{paddingTop: 20}} /> : null}

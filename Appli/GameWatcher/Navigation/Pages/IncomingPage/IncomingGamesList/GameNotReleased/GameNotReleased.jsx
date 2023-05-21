@@ -1,14 +1,27 @@
-import {TouchableOpacity, View, StyleSheet} from 'react-native';
+import {TouchableOpacity, View, StyleSheet, Alert} from 'react-native';
 import GameCover from "../../../HomePage/GameList/GameCover/GameCover";
 import {useContext} from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import favoriteGamesContext from "../../../../../favoriteGamesContext";
+import {auth} from "../../../../../firebaseConfig";
 
 const GameNotReleased = ({cover, onPress, game}) => {
     const { addGameToFavorites, removeGameFromFavorites, isGameFavorite } = useContext(favoriteGamesContext);
+    const userId = auth.currentUser ? auth.currentUser.uid : null;
 
     const handleFavorite = (game) => {
-        //!isGameFavorite(game) ? addGameToFavorites(game) : removeGameFromFavorites(game);
+        console.log(`game : ${game.id}`);
+        if (!userId) {
+            Alert.alert(
+                "Non connecté",
+                "Vous devez être connecté pour utiliser cette fonctionnalité",
+                [
+                    { text: "OK" }
+                ]
+            );
+            return;
+        }
+        !isGameFavorite(game) ? addGameToFavorites(game, userId) : removeGameFromFavorites(game, userId);
     }
 
     return (
