@@ -17,7 +17,7 @@ const SearchBar = ({ onSearch }) => {
     return (
         <View style={[styles.searchBar, styles.shadow ,{borderColor: borderColor}]}>
             <TextInput
-                placeholder="Rechercher un jeu..."
+                placeholder="Search for a game..."
                 value={searchText}
                 onChangeText={setSearchText}
                 onFocus={handleFocus}

@@ -75,7 +75,7 @@ const LoginPage = ({navigation}) => {
 
     return (
         <View style={styles.loginPage}>
-            <Text style={styles.loginTitle}>Connexion</Text>
+            <Text style={styles.loginTitle}>Sign In</Text>
             <View style={[styles.loginInputContainer, {borderColor: focusedField === 'email' ? '#4EF5B9' : '#C9FAE8'}, emailError && styles.loginInputError]}>
                 <TextInput
                     style={styles.loginInput}
@@ -97,21 +97,21 @@ const LoginPage = ({navigation}) => {
                     onBlur={handleBlur}
                     secureTextEntry={true}
                     value={password}
-                    placeholder="Mot de passe"
+                    placeholder="Password"
                     placeholderTextColor="#7E8A84"
                     selectionColor="#4EF5B9"
                 />
             </View>
             <Text style={styles.loginError}>{passwordError}</Text>
             <Pressable style={[styles.loginButton, styles.shadow]} onPress={handleLogin}>
-                <Text style={{color: '#242429'}}>Se connecter</Text>
+                <Text style={{color: '#242429'}}>Login</Text>
             </Pressable>
             <View style={styles.loginBottomContainer}>
                 <Pressable style={styles.loginBottomButton} onPress={goToRegister}>
-                    <Text style={styles.linkButton}>Créer un compte</Text>
+                    <Text style={styles.linkButton}>Create an account</Text>
                 </Pressable>
                 <Pressable style={styles.loginBottomButton} onPress={goToHome}>
-                    <Text style={styles.linkButton}>Continuer en tant qu'invité</Text>
+                    <Text style={styles.linkButton}>Continue as a guest</Text>
                 </Pressable>
             </View>
             <View style={styles.logoContainer}>
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#4EF5B9',
         marginTop: 10,
         paddingVertical: 10,
-        paddingHorizontal: 20,
+        paddingHorizontal: 30,
         borderRadius: 10,
     },
     loginBottomContainer: {

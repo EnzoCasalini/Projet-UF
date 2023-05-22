@@ -10,7 +10,6 @@ const GameNotReleased = ({cover, onPress, game}) => {
     const userId = auth.currentUser ? auth.currentUser.uid : null;
 
     const handleFavorite = (game) => {
-        console.log(`game : ${game.id}`);
         if (!userId) {
             Alert.alert(
                 "Non connecté",

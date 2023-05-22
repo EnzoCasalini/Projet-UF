@@ -35,10 +35,8 @@ export default function App() {
             catch (error) {
                 console.error(error);
             }
-            finally {
-                setIsLoading(false);
-            }
         }
+        setIsLoading(false);
     }
 
     const searchGames = async (searchText) => {
@@ -46,7 +44,7 @@ export default function App() {
         setSearchText(searchText);
         try {
             // On requête l'API avec le texte de recherche
-            const searchedGames = await fetchGamesWithOption(1, {  ordering: '-added', search: searchText });
+            const searchedGames = await fetchGamesWithOption(1, {  ordering: '-added', search: searchText, search_exact: true });
             // On remplace les jeux actuels par les jeux trouvés
             setGames(searchedGames.results);
             setNextPage(searchedGames.next);

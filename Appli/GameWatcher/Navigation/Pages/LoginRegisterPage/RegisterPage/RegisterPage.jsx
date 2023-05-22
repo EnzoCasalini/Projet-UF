@@ -103,7 +103,7 @@ const RegisterPage = ({navigation}) => {
             <View style={styles.logoContainer}>
                 <Image source={require('../../../../assets/GameWatcherHeader.png')} style={styles.logo} />
             </View>
-            <Text style={styles.loginTitle}>Inscription</Text>
+            <Text style={styles.loginTitle}>Register</Text>
             <View style={[styles.loginInputContainer, {borderColor: focusedField === 'username' ? '#4EF5B9' : '#C9FAE8'}, usernameError && styles.loginInputError]}>
                 <TextInput
                     style={styles.loginInput}
@@ -111,7 +111,7 @@ const RegisterPage = ({navigation}) => {
                     onFocus={() => handleFocus('username')}
                     onBlur={handleBlur}
                     value={username}
-                    placeholder="Nom d'utilisateur"
+                    placeholder="Username"
                     placeholderTextColor="#7E8A84"
                     selectionColor="#4EF5B9"
                 />
@@ -138,7 +138,7 @@ const RegisterPage = ({navigation}) => {
                     onBlur={handleBlur}
                     secureTextEntry={true}
                     value={password}
-                    placeholder="Mot de passe"
+                    placeholder="Password"
                     placeholderTextColor="#7E8A84"
                     selectionColor="#4EF5B9"
                 />
@@ -152,21 +152,21 @@ const RegisterPage = ({navigation}) => {
                     onBlur={handleBlur}
                     secureTextEntry={true}
                     value={confirmPassword}
-                    placeholder="Confirmer le mot de passe"
+                    placeholder="Confirm password"
                     placeholderTextColor="#7E8A84"
                     selectionColor="#4EF5B9"
                 />
             </View>
             <Text style={styles.loginError}>{confirmPasswordError}</Text>
             <Pressable style={[styles.loginButton, styles.shadow]} onPress={handleRegister}>
-                <Text>S'inscrire</Text>
+                <Text>Register</Text>
             </Pressable>
             <View style={styles.loginBottomContainer}>
                 <Pressable style={styles.loginBottomButton} onPress={goToLogin}>
-                    <Text style={styles.linkButton}>Déjà un compte ? Se connecter</Text>
+                    <Text style={styles.linkButton}>Already registered ? Log in</Text>
                 </Pressable>
                 <Pressable style={styles.loginBottomButton} onPress={goToHome}>
-                    <Text style={styles.linkButton}>Continuer en tant qu'invité</Text>
+                    <Text style={styles.linkButton}>Continue as a guest</Text>
                 </Pressable>
             </View>
         </View>

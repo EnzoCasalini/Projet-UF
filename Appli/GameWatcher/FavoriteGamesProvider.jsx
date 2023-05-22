@@ -10,7 +10,6 @@ const FavoriteGamesProvider = ({ children }) => {
     const [userId, setUserId] = useState(null);
 
     const addGameToFavorites = (game) => {
-        console.log(`game2 : ${game.id}`)
         if (userId) {
             const gameRef = ref(database, `utilisateurs/${userId}/favoriteGames/${game.id}`);
             set(gameRef, {

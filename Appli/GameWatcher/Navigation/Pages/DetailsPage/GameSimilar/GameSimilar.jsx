@@ -39,7 +39,7 @@ const GameSimilar = ({ gameGenres, gameId }) => {
 
     return (
         <>
-            <Text style={styles.title}>Vous pourriez aussi aimer :</Text>
+            <Text style={styles.title}>You could also like :</Text>
             <View style={styles.listContainer}>
                 <FlatList
                     data={similarGames}
