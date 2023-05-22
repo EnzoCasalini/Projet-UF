@@ -4,6 +4,8 @@ import {useEffect, useState} from "react";
 import FavoriteGamesProvider from "./FavoriteGamesProvider";
 import gamesContext from "./gamesContext";
 import {fetchGames, fetchGamesWithOption} from "./services/rawgApiService";
+import * as Notifications from 'expo-notifications';
+
 
 export default function App() {
     const [games, setGames] = useState([]);
@@ -11,6 +13,15 @@ export default function App() {
     const [isLoading, setIsLoading] = useState(false);
     const [searchText, setSearchText] = useState("");
     const [canFetchMore, setCanFetchMore] = useState(true);
+
+
+    Notifications.setNotificationHandler({
+        handleNotification: async () => ({
+            shouldShowAlert: true,
+            shouldPlaySound: false,
+            shouldSetBadge: false,
+        }),
+    });
 
     const fetchMoreGames = async () => {
         if (!canFetchMore) return;
