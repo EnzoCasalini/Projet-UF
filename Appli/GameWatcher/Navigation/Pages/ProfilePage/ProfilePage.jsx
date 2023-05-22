@@ -2,12 +2,13 @@ import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from "react";
 import {auth, database} from '../../../firebaseConfig';
 import {onValue, ref} from 'firebase/database';
+import loading from '../../../assets/loading.gif'
 
 const ProfilePage = ({navigation}) => {
     if (auth.currentUser) {
         const [username, setUsername] = useState('');
         const [email, setEmail] = useState('');
-        const [image, setImage] = useState('');
+        const [image, setImage] = useState(loading);
 
         //Retrieve user data in firebase
         useEffect(() => {
@@ -17,14 +18,14 @@ const ProfilePage = ({navigation}) => {
                 onValue(userRef, (snapshot) => {
                     const userData = snapshot.val();
                     if (userData) {
+                        if (userData.image) {
+                            setImage(userData.image);
+                        }
                         if (userData.username) {
                             setUsername(userData.username);
                         }
                         if (userData.email) {
                             setEmail(userData.email);
-                        }
-                        if (userData.image) {
-                            setImage(userData.image);
                         }
                     }
                 });
@@ -35,7 +36,7 @@ const ProfilePage = ({navigation}) => {
             <View style={styles.background}>
                 <View style={styles.profileImageContainer}>
                     <Image
-                        source={{uri: `data:image/png;base64,${image}`}}
+                        source={{uri: `${image}`}}
                         style={styles.profileImage}
                     />
                 </View>
@@ -56,7 +57,7 @@ const ProfilePage = ({navigation}) => {
                     </Text>
                 </View>
                 <Pressable style={styles.modificationButton} onPress={() => navigation.navigate('ProfileEdit')}>
-                    Modifier les informations
+                    <Text>Modifier les informations</Text>
                 </Pressable>
             </View>);
     } else {
@@ -76,13 +77,13 @@ const styles = StyleSheet.create({
         width: '100%',
         display: 'flex',
         backgroundColor: '#242429',
-        padding: '20px',
+        padding: 20,
     },
     profileImageContainer: {
         alignSelf: 'center',
         aspectRatio: 1,
-        width: '110px',
-        height: '110px',
+        width: 110,
+        height: 110,
         borderStyle: 'solid',
         borderWidth: 5,
         borderRadius: 100,
@@ -90,23 +91,23 @@ const styles = StyleSheet.create({
     },
     profileImage: {
         aspectRatio: 1,
-        width: '100px',
+        width: 100,
         borderRadius: 100,
     },
     infoContainer: {
-        margin: '10px',
+        margin: 10,
     },
     infoTitle: {
         color: 'white',
     },
     infoContent: {
-        margin: '10px',
+        margin: 10,
         color: 'white',
     },
     modificationButton: {
         color: 'white',
-        margin: '10px',
-        padding: '10px',
+        margin: 10,
+        padding: 10,
         width: '60%',
         borderRadius: 20,
         backgroundColor: 'orange',
