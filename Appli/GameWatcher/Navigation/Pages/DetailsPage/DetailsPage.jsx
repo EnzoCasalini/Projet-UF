@@ -3,6 +3,7 @@ import {ScrollView, StyleSheet} from 'react-native';
 import GameImage from "./GameImage/GameImage";
 import GameInfos from "./GameInfos/GameInfos";
 import {fetchGame} from "../../../services/rawgApiService";
+import GameSimilar from "./GameSimilar/GameSimilar";
 
 const DetailsPage = ({ route }) => {
     const { game } = route.params
@@ -17,10 +18,12 @@ const DetailsPage = ({ route }) => {
         fetchAndSetGameInfos();
     }, []);
 
+
     return (
         <ScrollView style={styles.game}>
             <GameImage cover={gameInfos.background_image}/>
             <GameInfos game={gameInfos} />
+            <GameSimilar gameGenres={gameInfos.genres} gameId={game.id}/>
         </ScrollView>
     );
 };

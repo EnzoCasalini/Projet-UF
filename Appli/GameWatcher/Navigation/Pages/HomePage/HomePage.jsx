@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View} from 'react-native';
 import GameList from "./GameList/GameList";
 import SearchBar from "./SearchBar/SearchBar";

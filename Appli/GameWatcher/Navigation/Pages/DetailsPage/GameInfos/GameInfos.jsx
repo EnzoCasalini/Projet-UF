@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
         paddingHorizontal: 50,
-        paddingBottom: 50,
+        paddingBottom: 20,
         top: -50,
     },
     gameName: {

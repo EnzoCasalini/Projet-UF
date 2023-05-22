@@ -38,3 +38,17 @@ export const fetchGame = async (id) => {
         throw error;
     }
 }
+
+// Méthode qui permet de fetch des jeux d'un genre spécifique depuis l'API RAWG.
+export const fetchGamesByGenre = async (genre, page = 1, pageSize = 4) => {
+    const params = { page, page_size: pageSize, genres: genre };
+    const queryParams = Object.keys(params)
+        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+        .join('&');
+
+    // On crée une nouvelle URL à partir de l'URL de base et des params
+    const url = `${BASE_URL}${API_KEY}&${queryParams}`;
+
+    return fetchGames(url);
+}
+
