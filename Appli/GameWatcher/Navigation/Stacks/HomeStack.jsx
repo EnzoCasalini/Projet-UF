@@ -7,12 +7,14 @@ import DetailsPage from "../Pages/DetailsPage/DetailsPage";
 import ProfilePage from "../Pages/ProfilePage/ProfilePage";
 import AppHeader from "../AppHeader/AppHeader";
 import OtherPagesHeader from "../OtherPagesHeader/OtherPagesHeader";
+import ProfileEditPage from "../Pages/ProfilePage/ProfileEditPage";
 
 
 const Stack = createNativeStackNavigator();
 const homeScreenName = "Home";
 const detailsScreenName = "Details";
 const profileScreenName = "Profile";
+const profileEditScreenName = "ProfileEdit"
 
 const HomeStack = () => {
 
@@ -37,6 +39,7 @@ const HomeStack = () => {
                 }
             }/>
             <Stack.Screen name={profileScreenName} component={ProfilePage} />
+            <Stack.Screen name={profileEditScreenName} component={ProfileEditPage} />
         </Stack.Navigator>
     )
 }
