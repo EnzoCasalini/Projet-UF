@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TextInput, View, Pressable} from 'react-native';
+import {StyleSheet, Text, TextInput, View, Pressable, Image} from 'react-native';
 import {auth} from '../../../../firebaseConfig' ;
 import {signInWithEmailAndPassword} from "firebase/auth";
 
@@ -9,6 +9,9 @@ const LoginPage = ({navigation}) => {
 
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+
+    const [focusedField, setFocusedField] = useState(null);
+
 
     const handleLogin = () => {
         // Reset all errors
@@ -43,6 +46,24 @@ const LoginPage = ({navigation}) => {
         }
     }
 
+    const handleFocus = (field) => {
+        switch (field) {
+            case 'email':
+                setEmailError('');
+                break;
+            case 'password':
+                setPasswordError('');
+                break;
+            default:
+                break;
+        }
+        setFocusedField(field);
+    };
+
+    const handleBlur = () => {
+        setFocusedField(null);
+    };
+
     const goToRegister = () => navigation.navigate('Register');
 
     const goToHome = () => {
@@ -54,32 +75,47 @@ const LoginPage = ({navigation}) => {
 
     return (
         <View style={styles.loginPage}>
-            <Text style={styles.loginTitle}>Connexion</Text>
-            <TextInput
-                style={[styles.loginInput, passwordError && styles.loginInputError]}
-                onChangeText={setEmail}
-                value={email}
-                placeholder="Email"
-            />
+            <Text style={styles.loginTitle}>Sign In</Text>
+            <View style={[styles.loginInputContainer, {borderColor: focusedField === 'email' ? '#4EF5B9' : '#C9FAE8'}, emailError && styles.loginInputError]}>
+                <TextInput
+                    style={styles.loginInput}
+                    onChangeText={setEmail}
+                    onFocus={() => handleFocus('email')}
+                    onBlur={handleBlur}
+                    value={email}
+                    placeholder="Email"
+                    placeholderTextColor="#7E8A84"
+                    selectionColor="#4EF5B9"
+                />
+            </View>
             <Text style={styles.loginError}>{emailError}</Text>
-            <TextInput
-                style={[styles.loginInput, passwordError && styles.loginInputError]}
-                onChangeText={setPassword}
-                secureTextEntry={true}
-                value={password}
-                placeholder="Mot de passe"
-            />
+            <View style={[styles.loginInputContainer, {borderColor: focusedField === 'password' ? '#4EF5B9' : '#C9FAE8'}, passwordError && styles.loginInputError]}>
+                <TextInput
+                    style={styles.loginInput}
+                    onChangeText={setPassword}
+                    onFocus={() => handleFocus('password')}
+                    onBlur={handleBlur}
+                    secureTextEntry={true}
+                    value={password}
+                    placeholder="Password"
+                    placeholderTextColor="#7E8A84"
+                    selectionColor="#4EF5B9"
+                />
+            </View>
             <Text style={styles.loginError}>{passwordError}</Text>
-            <Pressable style={styles.loginButton} onPress={handleLogin}>
-                <Text>Se connecter</Text>
+            <Pressable style={[styles.loginButton, styles.shadow]} onPress={handleLogin}>
+                <Text style={{color: '#242429'}}>Login</Text>
             </Pressable>
             <View style={styles.loginBottomContainer}>
                 <Pressable style={styles.loginBottomButton} onPress={goToRegister}>
-                    <Text>Creer un compte</Text>
+                    <Text style={styles.linkButton}>Create an account</Text>
                 </Pressable>
                 <Pressable style={styles.loginBottomButton} onPress={goToHome}>
-                    <Text>Continuer en tant qu'invité</Text>
+                    <Text style={styles.linkButton}>Continue as a guest</Text>
                 </Pressable>
+            </View>
+            <View style={styles.logoContainer}>
+                <Image source={require('../../../../assets/GameWatcherFooter.png')} style={styles.logo} />
             </View>
         </View>
     );
@@ -87,21 +123,29 @@ const LoginPage = ({navigation}) => {
 
 const styles = StyleSheet.create({
     loginPage: {
-        paddingTop: 40,
+        paddingTop: 100,
         alignItems: 'center',
         height: '100%',
         width: '100%',
+        backgroundColor: '#302F37',
     },
     loginTitle: {
-        margin: 50,
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: '#C9FAE8',
+        marginBottom: 20,
+    },
+    loginInputContainer: {
+        width: '80%',
+        height: 40,
+        marginTop: 10,
+        borderWidth: 2,
+        borderRadius: 10,
+        padding: 10,
     },
     loginInput: {
-        height: 40,
-        width: '80%',
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-        borderRadius: 15,
+        color: '#C9FAE8',
+        fontSize: 16,
     },
     loginInputError: {
         borderColor: 'red',
@@ -110,25 +154,46 @@ const styles = StyleSheet.create({
         color: 'red',
         fontSize: 12,
         height: 12,
-        marginTop: -10,
+        marginTop: 5,
     },
     loginButton: {
         alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 12,
-        paddingHorizontal: 32,
-        borderRadius: 4,
-        elevation: 3,
-        backgroundColor: 'red',
-        margin: 50,
+        backgroundColor: '#4EF5B9',
+        marginTop: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 30,
+        borderRadius: 10,
     },
     loginBottomContainer: {
         alignItems: 'center',
-        position: 'absolute',
-        bottom: 75,
+        marginTop: 10,
     },
     loginBottomButton: {
         padding: 5,
+    },
+    linkButton: {
+      color: "#C9FAE8",
+    },
+    logoContainer: {
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        height: '60%',
+        backgroundColor: '#242429',
+    },
+    logo: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
+    },
+    shadow: {
+        shadowColor: "#4EF5B9",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 1,
     },
 });
 

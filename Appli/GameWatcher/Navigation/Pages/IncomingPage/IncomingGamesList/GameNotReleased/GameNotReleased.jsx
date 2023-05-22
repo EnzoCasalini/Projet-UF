@@ -1,22 +1,32 @@
-import {TouchableOpacity, View, StyleSheet} from 'react-native';
+import {TouchableOpacity, View, StyleSheet, Alert} from 'react-native';
 import GameCover from "../../../HomePage/GameList/GameCover/GameCover";
-import {useContext, useState} from "react";
+import {useContext} from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import favoriteGamesContext from "../../../../../favoriteGamesContext";
+import {auth} from "../../../../../firebaseConfig";
 
 const GameNotReleased = ({cover, onPress, game}) => {
-    const [isFavorite, setIsFavorite] = useState(false);
-    const { addGameToFavorites, removeGameFromFavorites } = useContext(favoriteGamesContext);
+    const { addGameToFavorites, removeGameFromFavorites, isGameFavorite } = useContext(favoriteGamesContext);
+    const userId = auth.currentUser ? auth.currentUser.uid : null;
 
     const handleFavorite = (game) => {
-        setIsFavorite(!isFavorite);
-        !isFavorite ? addGameToFavorites(game) : removeGameFromFavorites(game);
+        if (!userId) {
+            Alert.alert(
+                "Non connecté",
+                "Vous devez être connecté pour utiliser cette fonctionnalité",
+                [
+                    { text: "OK" }
+                ]
+            );
+            return;
+        }
+        !isGameFavorite(game) ? addGameToFavorites(game) : removeGameFromFavorites(game);
     }
 
     return (
         <View>
             <TouchableOpacity style={styles.favoriteButton} onPress={() => handleFavorite(game)}>
-                <Ionicons name={isFavorite ? 'heart' : 'heart-outline'} size={30} color={isFavorite ? '#4EF5B9' : '#C9FAE8'} style={styles.shadow}/>
+                <Ionicons name={isGameFavorite(game) ? 'heart' : 'heart-outline'} size={30} color={isGameFavorite(game) ? '#4EF5B9' : '#C9FAE8'} style={styles.shadow}/>
             </TouchableOpacity>
             <GameCover cover={cover} onPress={onPress} />
         </View>

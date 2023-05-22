@@ -1,21 +1,34 @@
 import {Image, StyleSheet, View} from 'react-native';
+import {useEffect, useState} from "react";
 
 const platformIcons = {
-    'PC': require('./assets/PcIcon.png'),
-    'PlayStation': require('./assets/PlayStationIcon.png'),
-    'Xbox': require('./assets/XboxIcon.png'),
-    'Nintendo Switch': require('./assets/NintendoIcon.png'),
+    'pc': require('./assets/PcIcon.png'),
+    'playstation': require('./assets/PlayStationIcon.png'),
+    'xbox': require('./assets/XboxIcon.png'),
+    'switch': require('./assets/NintendoIcon.png'),
 };
 
 const GamePlatforms = ({platforms}) => {
-    const iconsToDisplay = platforms.map((platform, index) => {
-        const icon = platformIcons[platform];
-        if (icon) {
-            return (
-                <View style={styles.iconContainer} key={index}>
-                    <Image key={platform} source={icon} style={{width: '100%', height: '100%'}}/>
-                </View>
+    const [platformsToDisplay, setPlatformsToDisplay] = useState([]);
+
+    useEffect(() => {
+        if (platforms !== undefined) {
+            const platformsData = platforms.map((platform) =>
+                platform.platform.name.toLowerCase()
             );
+            setPlatformsToDisplay(platformsData);
+        }
+    }, [platforms]);
+
+    const iconsToDisplay = Object.keys(platformIcons).map((iconKey, index) => {
+        for (let platform of platformsToDisplay) {
+            if (platform.includes(iconKey)) {
+                return (
+                    <View style={styles.iconContainer} key={index}>
+                        <Image source={platformIcons[iconKey]} style={{width: '100%', height: '100%'}}/>
+                    </View>
+                );
+            }
         }
         return null;
     });

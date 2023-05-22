@@ -24,7 +24,7 @@ const HomeStack = () => {
                 ({navigation}) => {
                     return {
                         header: () => (
-                            <AppHeader navigation={navigation} title="GameWATCHER" />
+                            <AppHeader navigation={navigation} />
                         ),
                     };
                 }

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TextInput, View, Pressable} from 'react-native';
+import {StyleSheet, Text, TextInput, View, Pressable, Image} from 'react-native';
 import {auth, database} from '../../../../firebaseConfig';
+
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import {ref, set} from "firebase/database";
 
@@ -14,6 +15,9 @@ const RegisterPage = ({navigation}) => {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
+
+    const [focusedField, setFocusedField] = useState(null);
+
 
     const handleRegister = () => {
         // Reset all errors
@@ -93,48 +97,99 @@ const RegisterPage = ({navigation}) => {
         });
     }
 
+    const handleFocus = (field) => {
+        switch (field) {
+            case 'username':
+                setUsernameError('');
+                break;
+            case 'email':
+                setEmailError('');
+                break;
+            case 'password':
+                setPasswordError('');
+                break;
+            case 'confirmPassword':
+                setConfirmPasswordError('');
+                break;
+            default:
+                break;
+        }
+        setFocusedField(field);
+    };
+
+    const handleBlur = () => {
+        setFocusedField(null);
+    };
+
     return (
         <View style={styles.loginPage}>
-            <Text style={styles.loginTitle}>Inscription</Text>
-            <TextInput
-                style={[styles.loginInput, usernameError && styles.loginInputError]}
-                onChangeText={setUsername}
-                value={username}
-                placeholder="Nom d'utilisateur"
-            />
+            <View style={styles.logoContainer}>
+                <Image source={require('../../../../assets/GameWatcherHeader.png')} style={styles.logo} />
+            </View>
+            <Text style={styles.loginTitle}>Register</Text>
+            <View style={[styles.loginInputContainer, {borderColor: focusedField === 'username' ? '#4EF5B9' : '#C9FAE8'}, usernameError && styles.loginInputError]}>
+                <TextInput
+                    style={styles.loginInput}
+                    onChangeText={setUsername}
+                    onFocus={() => handleFocus('username')}
+                    onBlur={handleBlur}
+                    value={username}
+                    placeholder="Username"
+                    placeholderTextColor="#7E8A84"
+                    selectionColor="#4EF5B9"
+                />
+            </View>
             <Text style={styles.loginError}>{usernameError}</Text>
-            <TextInput
-                style={[styles.loginInput, emailError && styles.loginInputError]}
-                onChangeText={setEmail}
-                value={email}
-                placeholder="Email"
-            />
+            <View style={[styles.loginInputContainer, {borderColor: focusedField === 'email' ? '#4EF5B9' : '#C9FAE8'}, emailError && styles.loginInputError]}>
+                <TextInput
+                    style={styles.loginInput}
+                    onChangeText={setEmail}
+                    onFocus={() => handleFocus('email')}
+                    onBlur={handleBlur}
+                    value={email}
+                    placeholder="Email"
+                    placeholderTextColor="#7E8A84"
+                    selectionColor="#4EF5B9"
+                />
+            </View>
             <Text style={styles.loginError}>{emailError}</Text>
-            <TextInput
-                style={[styles.loginInput, passwordError && styles.loginInputError]}
-                onChangeText={setPassword}
-                secureTextEntry={true}
-                value={password}
-                placeholder="Mot de passe"
-            />
+            <View style={[styles.loginInputContainer, {borderColor: focusedField === 'password' ? '#4EF5B9' : '#C9FAE8'}, passwordError && styles.loginInputError]}>
+                <TextInput
+                    style={styles.loginInput}
+                    onChangeText={setPassword}
+                    onFocus={() => handleFocus('password')}
+                    onBlur={handleBlur}
+                    secureTextEntry={true}
+                    value={password}
+                    placeholder="Password"
+                    placeholderTextColor="#7E8A84"
+                    selectionColor="#4EF5B9"
+                />
+            </View>
             <Text style={styles.loginError}>{passwordError}</Text>
-            <TextInput
-                style={[styles.loginInput, confirmPasswordError && styles.loginInputError]}
-                onChangeText={setConfirmPassword}
-                secureTextEntry={true}
-                value={confirmPassword}
-                placeholder="Confirmer le mot de passe"
-            />
+            <View style={[styles.loginInputContainer, {borderColor: focusedField === 'confirmPassword' ? '#4EF5B9' : '#C9FAE8'}, confirmPasswordError && styles.loginInputError]}>
+                <TextInput
+                    style={styles.loginInput}
+                    onChangeText={setConfirmPassword}
+                    onFocus={() => handleFocus('confirmPassword')}
+                    onBlur={handleBlur}
+                    secureTextEntry={true}
+                    value={confirmPassword}
+                    placeholder="Confirm password"
+                    placeholderTextColor="#7E8A84"
+                    selectionColor="#4EF5B9"
+                />
+            </View>
             <Text style={styles.loginError}>{confirmPasswordError}</Text>
-            <Pressable style={styles.loginButton} onPress={handleRegister}>
-                <Text>Se connecter</Text>
+            <Pressable style={[styles.loginButton, styles.shadow]} onPress={handleRegister}>
+                <Text>Register</Text>
             </Pressable>
             <View style={styles.loginBottomContainer}>
                 <Pressable style={styles.loginBottomButton} onPress={goToLogin}>
-                    <Text>Creer un compte</Text>
+                    <Text style={styles.linkButton}>Already registered ? Log in</Text>
                 </Pressable>
                 <Pressable style={styles.loginBottomButton} onPress={goToHome}>
-                    <Text>Continuer en tant qu'invité</Text>
+                    <Text style={styles.linkButton}>Continue as a guest</Text>
                 </Pressable>
             </View>
         </View>
@@ -143,21 +198,38 @@ const RegisterPage = ({navigation}) => {
 
 const styles = StyleSheet.create({
     loginPage: {
-        paddingTop: 40,
         alignItems: 'center',
         height: '100%',
         width: '100%',
+        backgroundColor: '#302F37',
+    },
+    logoContainer: {
+        width: '100%',
+        height: '40%',
+        marginBottom: 20,
+    },
+    logo: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
     },
     loginTitle: {
-        margin: 50,
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: '#C9FAE8',
+        marginBottom: 20,
+    },
+    loginInputContainer: {
+        width: '80%',
+        height: 40,
+        marginTop: 10,
+        borderWidth: 2,
+        borderRadius: 10,
+        padding: 10,
     },
     loginInput: {
-        height: 40,
-        width: '80%',
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-        borderRadius: 15,
+        color: '#C9FAE8',
+        fontSize: 16,
     },
     loginInputError: {
         borderColor: 'red',
@@ -166,25 +238,34 @@ const styles = StyleSheet.create({
         color: 'red',
         fontSize: 12,
         height: 12,
-        marginTop: -10,
+        marginTop: 5,
     },
     loginButton: {
         alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 12,
-        paddingHorizontal: 32,
-        borderRadius: 4,
-        elevation: 3,
-        backgroundColor: 'red',
-        margin: 50,
+        backgroundColor: '#4EF5B9',
+        marginTop: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 30,
+        borderRadius: 10,
     },
     loginBottomContainer: {
         alignItems: 'center',
-        position: 'absolute',
-        bottom: 75,
+        marginTop: 20,
     },
     loginBottomButton: {
         padding: 5,
+    },
+    linkButton: {
+        color: "#C9FAE8",
+    },
+    shadow: {
+        shadowColor: "#4EF5B9",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 1,
     },
 });
 

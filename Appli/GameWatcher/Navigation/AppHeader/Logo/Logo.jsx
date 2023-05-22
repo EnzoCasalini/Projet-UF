@@ -1,22 +1,23 @@
-import {Text, View, StyleSheet} from 'react-native';
+import {Image, View, StyleSheet} from 'react-native';
 
-const Logo = ({title}) => {
+const Logo = () => {
     return (
-        <View>
-            <Text style={styles.title}>
-                {title}
-            </Text>
+        <View style={styles.container}>
+            <Image source={require('../../../assets/GameWatcherLogo.png')} style={styles.logo} />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: "#ffffff",
-        textAlign: "center",
-    }
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    logo: {
+        width: 120,
+        height: 80,
+        resizeMode: 'contain',
+    },
 });
 
 export default Logo;

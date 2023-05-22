@@ -1,11 +1,24 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import * as Notifications from "expo-notifications";
 
 const Notification = () => {
+    const triggerNotificationHandler = () => {
+        Notifications.scheduleNotificationAsync({
+            content: {
+                title: "Super useful notification",
+                body: "This is a very, very, very interesting notification.",
+                data: { mySpecialData: 'Some text' },
+            },
+            trigger: null,
+        });
+    };
+
+
     return (
-        <View>
+        <TouchableOpacity onPress={triggerNotificationHandler}>
             <Ionicons name="notifications-outline" size={30} color="#C9FAE8" style={styles.shadow}/>
-        </View>
+        </TouchableOpacity>
     );
 }
 

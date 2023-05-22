@@ -1,14 +1,12 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import gamesContext from "../../../gamesContext";
 import IncomingGamesList from "./IncomingGamesList/IncomingGamesList";
 
 const IncomingPage = ({navigation}) => {
-    const { games } = useContext(gamesContext);
 
     return (
         <View style={styles.gamesContainer}>
-            <IncomingGamesList games={games} navigation={navigation}/>
+            <IncomingGamesList navigation={navigation}/>
         </View>
     );
 };

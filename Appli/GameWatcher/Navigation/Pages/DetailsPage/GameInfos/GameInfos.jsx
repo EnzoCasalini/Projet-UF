@@ -13,7 +13,7 @@ const GameInfos = ({game}) => {
         <View style={styles.gameInfos}>
             <Text style={styles.gameName}>{game.name}</Text>
             <StarRating rating={game.rating} />
-            <GameLabelAndTextInfos description={game.description} platforms={game.platforms} releaseDate={game.releaseDate} />
+            <GameLabelAndTextInfos description={game.description} platforms={game.platforms} releaseDate={game.released} />
             <TouchableOpacity onPress={goToGameWebsite}>
                 <Text style={[styles.gameWebsite, styles.shadow]}>Check out their website !</Text>
             </TouchableOpacity>
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
         paddingHorizontal: 50,
-        paddingBottom: 50,
+        paddingBottom: 20,
         top: -50,
     },
     gameName: {

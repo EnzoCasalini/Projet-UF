@@ -1,8 +1,9 @@
 import {StyleSheet, TextInput, View} from 'react-native';
-import {useState} from "react";
+import {useContext, useState} from "react";
+import GamesContext from "../../../../gamesContext";
 
-const SearchBar = ({ searchText, onSearch }) => {
-
+const SearchBar = ({ onSearch }) => {
+    const { searchText, setSearchText } = useContext(GamesContext);
     const [borderColor, setBorderColor] = useState('#C9FAE8');
 
     const handleFocus = () => {
@@ -16,11 +17,12 @@ const SearchBar = ({ searchText, onSearch }) => {
     return (
         <View style={[styles.searchBar, styles.shadow ,{borderColor: borderColor}]}>
             <TextInput
-                placeholder="Rechercher un jeu..."
+                placeholder="Search for a game..."
                 value={searchText}
-                onChangeText={onSearch}
+                onChangeText={setSearchText}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
+                onSubmitEditing={() => onSearch(searchText)}
                 placeholderTextColor="#7E8A84"
                 selectionColor="#4EF5B9"
                 style={styles.textInput}
