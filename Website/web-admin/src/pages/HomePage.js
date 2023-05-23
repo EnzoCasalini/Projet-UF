@@ -3,17 +3,10 @@ import {signOut} from "firebase/auth";
 import {ref, get, remove} from 'firebase/database';
 import {auth, database} from "../firebaseConfig";
 import {useNavigate} from "react-router-dom";
-import admin from "firebase-admin";
 
 const HomePage = () => {
     const navigate = useNavigate();
     const [userList, setUserList] = useState([]);
-
-    // Initialisez l'application Firebase Admin
-    // const admin = require('firebase-admin');
-    // admin.initializeApp({
-    //     credential: admin.credential.applicationDefault(),
-    // });
 
     useEffect(() => {
         // Récupérer la liste des utilisateurs Firebase
@@ -50,7 +43,6 @@ const HomePage = () => {
                 // Gestion des erreurs lors de la déconnexion
                 console.log('Erreur lors de la déconnexion :', error.message);
             });
-
     }
 
     const handleDelete = (userId) => {
@@ -58,8 +50,6 @@ const HomePage = () => {
             // Supprimer l'entrée de la table "utilisateurs"
             const userRef = ref(database, `utilisateurs/${userId}`);
             remove(userRef).catch();
-            // Supprimer le compte de utilisateur
-            // admin.auth().deleteUser(userId).catch();
 
             navigate('/home');
         } catch (error) {
