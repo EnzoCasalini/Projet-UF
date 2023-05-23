@@ -1,37 +1,51 @@
 import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from "react";
 import {auth, database} from '../../../firebaseConfig';
+import {signOut} from 'firebase/auth';
 import {onValue, ref} from 'firebase/database';
-import loading from '../../../assets/loading.gif'
+import loading from '../../../assets/loading.gif';
 
 const ProfilePage = ({navigation}) => {
-    if (auth.currentUser) {
-        const [username, setUsername] = useState('');
-        const [email, setEmail] = useState('');
-        const [image, setImage] = useState(loading);
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [image, setImage] = useState(loading);
 
-        //Retrieve user data in firebase
-        useEffect(() => {
-            if (auth.currentUser) {
-                const userId = auth.currentUser.uid;
-                const userRef = ref(database, 'utilisateurs/' + userId);
-                onValue(userRef, (snapshot) => {
-                    const userData = snapshot.val();
-                    if (userData) {
-                        if (userData.image) {
-                            setImage(userData.image);
-                        }
-                        if (userData.username) {
-                            setUsername(userData.username);
-                        }
-                        if (userData.email) {
-                            setEmail(userData.email);
-                        }
+    const handleLogout = () => {
+        signOut(auth)
+            .then(() => {
+                // Déconnexion réussie
+                console.log('Utilisateur déconnecté');
+                navigation.navigate('Login')
+            })
+            .catch((error) => {
+                // Gestion des erreurs lors de la déconnexion
+                console.log('Erreur lors de la déconnexion :', error.message);
+            });
+    }
+
+    //Retrieve user data in firebase
+    useEffect(() => {
+        if (auth.currentUser) {
+            const userId = auth.currentUser.uid;
+            const userRef = ref(database, 'utilisateurs/' + userId);
+            onValue(userRef, (snapshot) => {
+                const userData = snapshot.val();
+                if (userData) {
+                    if (userData.image) {
+                        setImage(userData.image);
                     }
-                });
-            }
-        }, []);
+                    if (userData.username) {
+                        setUsername(userData.username);
+                    }
+                    if (userData.email) {
+                        setEmail(userData.email);
+                    }
+                }
+            });
+        }
+    }, []);
 
+    if (auth.currentUser) {
         return (
             <View style={styles.background}>
                 <View style={styles.profileImageContainer}>
@@ -59,6 +73,9 @@ const ProfilePage = ({navigation}) => {
                 <Pressable style={styles.modificationButton} onPress={() => navigation.navigate('ProfileEdit')}>
                     <Text>Modifier les informations</Text>
                 </Pressable>
+                <Pressable style={styles.modificationButton} onPress={handleLogout}>
+                    <Text>Se deconnecter</Text>
+                </Pressable>
             </View>);
     } else {
         return (
@@ -68,6 +85,9 @@ const ProfilePage = ({navigation}) => {
                         Utilisateur non connecté
                     </Text>
                 </View>
+                <Pressable style={styles.modificationButton} onPress={() => navigation.navigate('Login')}>
+                    <Text>Se connecter</Text>
+                </Pressable>
             </View>);
     }
 }
