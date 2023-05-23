@@ -54,7 +54,6 @@ const ProfileEditPage = () => {
         if (valid) {
             const userId = auth.currentUser.uid;
             const userRef = ref(database, 'utilisateurs/' + userId);
-            console.log('change')
             const snapshot = await get(userRef);
             const userData = snapshot.val();
             try {

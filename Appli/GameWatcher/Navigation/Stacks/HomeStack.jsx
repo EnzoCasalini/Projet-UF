@@ -38,8 +38,24 @@ const HomeStack = () => {
                     };
                 }
             }/>
-            <Stack.Screen name={profileScreenName} component={ProfilePage} />
-            <Stack.Screen name={profileEditScreenName} component={ProfileEditPage} />
+            <Stack.Screen name={profileScreenName} component={ProfilePage} options={
+                ({navigation}) => {
+                    return {
+                        header: () => (
+                            <OtherPagesHeader navigation={navigation} title="Profile"/>
+                        ),
+                    };
+                }
+            }/>
+            <Stack.Screen name={profileEditScreenName} component={ProfileEditPage} options={
+                ({navigation}) => {
+                    return {
+                        header: () => (
+                            <OtherPagesHeader navigation={navigation} title="Edit profile"/>
+                        ),
+                    };
+                }
+            }/>
         </Stack.Navigator>
     )
 }

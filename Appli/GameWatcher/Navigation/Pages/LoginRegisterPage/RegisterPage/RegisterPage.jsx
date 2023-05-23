@@ -69,7 +69,6 @@ const RegisterPage = ({navigation}) => {
             createUserWithEmailAndPassword(auth, email, password)
                 .then(() => {
                     const userId = auth.currentUser.uid;
-                    console.log(userId);
                     const userRef = ref(database, 'utilisateurs/' + userId);
                     set(userRef, {
                         username: username,

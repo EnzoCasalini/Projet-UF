@@ -7,12 +7,14 @@ import ProfilePage from "../Pages/ProfilePage/ProfilePage";
 import AppHeader from "../AppHeader/AppHeader";
 import DetailsPage from "../Pages/DetailsPage/DetailsPage";
 import OtherPagesHeader from "../OtherPagesHeader/OtherPagesHeader";
+import ProfileEditPage from "../Pages/ProfilePage/ProfileEditPage";
 
 
 const Stack = createNativeStackNavigator();
 const incomingScreenName = "Incoming";
 const detailsScreenName = "Details";
 const profileScreenName = "Profile";
+const profileEditScreenName = "ProfileEdit"
 
 const IncomingStack = () => {
 
@@ -36,7 +38,24 @@ const IncomingStack = () => {
                     };
                 }
             }/>
-            <Stack.Screen name={profileScreenName} component={ProfilePage} />
+            <Stack.Screen name={profileScreenName} component={ProfilePage} options={
+                ({navigation}) => {
+                    return {
+                        header: () => (
+                            <OtherPagesHeader navigation={navigation} title="Profile"/>
+                        ),
+                    };
+                }
+            }/>
+            <Stack.Screen name={profileEditScreenName} component={ProfileEditPage} options={
+                ({navigation}) => {
+                    return {
+                        header: () => (
+                            <OtherPagesHeader navigation={navigation} title="Edit profile"/>
+                        ),
+                    };
+                }
+            }/>
         </Stack.Navigator>
     )
 }

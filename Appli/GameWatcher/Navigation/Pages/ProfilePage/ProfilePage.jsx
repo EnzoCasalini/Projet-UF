@@ -1,4 +1,4 @@
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from "react";
 import {auth, database} from '../../../firebaseConfig';
 import {onValue, ref} from 'firebase/database';
@@ -63,18 +63,21 @@ const ProfilePage = ({navigation}) => {
     } else {
         return (
             <View style={styles.background}>
-                <View style={styles.infoContainer}>
-                    <Text style={styles.infoTitle}>
-                        Utilisateur non connecté
-                    </Text>
+                <View style={styles.loginMessageContainer}>
+                    <Text style={styles.loginMessageText}>Veuillez vous connecter pour utiliser cette fonctionnalité</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                        <Text style={styles.loginLink}>Se connecter</Text>
+                    </TouchableOpacity>
                 </View>
-            </View>);
+            </View>
+        );
     }
 }
 
 const styles = StyleSheet.create({
     background: {
         width: '100%',
+        height: '100%',
         display: 'flex',
         backgroundColor: '#242429',
         padding: 20,
@@ -113,6 +116,28 @@ const styles = StyleSheet.create({
         backgroundColor: 'orange',
         alignSelf: 'center',
         textAlign: 'center',
+    },
+    loginMessageContainer: {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: "rgba(0, 0, 0, 0.4)",
+        paddingTop: "70%",
+        paddingHorizontal: "10%",
+        alignItems: "center",
+    },
+    loginMessageText: {
+        color: "#C9FAE8",
+        fontSize: 18,
+        textAlign: "center",
+    },
+    loginLink: {
+        color: '#4EF5B9',
+        fontSize: 16,
+        textDecorationLine: 'underline',
+        marginTop: 10,
     },
 });
 
