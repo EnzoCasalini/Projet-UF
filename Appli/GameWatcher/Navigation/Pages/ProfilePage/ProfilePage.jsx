@@ -1,6 +1,7 @@
 import {Image, Pressable, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from "react";
 import {auth, database} from '../../../firebaseConfig';
+import {signOut} from 'firebase/auth';
 import {onValue, ref} from 'firebase/database';
 import loading from '../../../assets/loading.gif'
 
@@ -9,6 +10,18 @@ const ProfilePage = ({navigation}) => {
         const [username, setUsername] = useState('');
         const [email, setEmail] = useState('');
         const [image, setImage] = useState(loading);
+
+        const handleLogout = () => {
+            signOut(auth)
+                .then(() => {
+                    // Déconnexion réussie
+                    navigation.navigate('Login')
+                })
+                .catch((error) => {
+                    // Gestion des erreurs lors de la déconnexion
+                    console.log('Erreur lors de la déconnexion :', error.message);
+                });
+        }
 
         //Retrieve user data in firebase
         useEffect(() => {
@@ -42,7 +55,7 @@ const ProfilePage = ({navigation}) => {
                 </View>
                 <View style={styles.infoContainer}>
                     <Text style={styles.infoTitle}>
-                        Nom d'utilisateur :
+                        Username :
                     </Text>
                     <Text style={styles.infoContent}>
                         {username}
@@ -50,23 +63,28 @@ const ProfilePage = ({navigation}) => {
                 </View>
                 <View style={styles.infoContainer}>
                     <Text style={styles.infoTitle}>
-                        Adresse email :
+                        E-mail :
                     </Text>
                     <Text style={styles.infoContent}>
                         {email}
                     </Text>
                 </View>
-                <Pressable style={styles.modificationButton} onPress={() => navigation.navigate('ProfileEdit')}>
-                    <Text>Modifier les informations</Text>
-                </Pressable>
+                <View style={{display: 'flex', alignItems: 'center'}}>
+                    <Pressable style={styles.modificationButton} onPress={() => navigation.navigate('ProfileEdit')}>
+                        <Text style={{color: '#242429'}}>Edit your profile</Text>
+                    </Pressable>
+                    <Pressable style={styles.modificationButton} onPress={handleLogout}>
+                        <Text style={{color: '#242429'}}>Log out</Text>
+                    </Pressable>
+                </View>
             </View>);
     } else {
         return (
             <View style={styles.background}>
                 <View style={styles.loginMessageContainer}>
-                    <Text style={styles.loginMessageText}>Veuillez vous connecter pour utiliser cette fonctionnalité</Text>
+                    <Text style={styles.loginMessageText}>You need to connect to use this functionality</Text>
                     <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                        <Text style={styles.loginLink}>Se connecter</Text>
+                        <Text style={styles.loginLink}>Log in</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -88,7 +106,7 @@ const styles = StyleSheet.create({
         width: 110,
         height: 110,
         borderStyle: 'solid',
-        borderWidth: 5,
+        borderWidth: 3,
         borderRadius: 100,
         borderColor: 'black',
     },
@@ -108,14 +126,13 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     modificationButton: {
-        color: 'white',
-        margin: 10,
-        padding: 10,
-        width: '60%',
-        borderRadius: 20,
-        backgroundColor: 'orange',
-        alignSelf: 'center',
-        textAlign: 'center',
+        alignItems: 'center',
+        backgroundColor: '#4EF5B9',
+        marginTop: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 30,
+        borderRadius: 10,
+        width: '50%',
     },
     loginMessageContainer: {
         position: "absolute",

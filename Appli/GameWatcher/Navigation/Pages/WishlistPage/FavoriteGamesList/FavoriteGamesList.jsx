@@ -30,7 +30,7 @@ const FavoriteGamesList = ({navigation}) => {
                         />)}
                 />
             ) : (
-                <Text style={styles.noGameText}>Aucun jeu dans vos favoris. Ajoutez-en depuis la page "Incoming" !</Text>
+                <Text style={styles.noGameText}>No games in your favorites. Add some from the 'Incoming' page !</Text>
             )}
         </>
     );

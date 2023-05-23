@@ -154,12 +154,12 @@ const ProfileEditPage = () => {
                     <Image source={{uri: `${image}`}} style={styles.profileImage}/>
                 </View>
                 <Pressable style={styles.imageSelectionButton} onPress={selectImageFromGallery}>
-                    <Text>Changer d'image</Text>
+                    <Text style={{color: '#242429'}}>Change profile picture</Text>
                 </Pressable>
             </View>
             <Text style={styles.textError}>{imageError}</Text>
             <View style={styles.inputContainer}>
-                <Text style={styles.inputLabel}>Nom d'utilisateur :</Text>
+                <Text style={styles.inputLabel}>Username :</Text>
                 <TextInput
                     style={styles.inputField}
                     onChangeText={setUsername}
@@ -169,7 +169,7 @@ const ProfileEditPage = () => {
             </View>
             <Text style={styles.textError}></Text>
             <View style={styles.inputContainer}>
-                <Text style={styles.inputLabel}>Adresse email :</Text>
+                <Text style={styles.inputLabel}>E-mail :</Text>
                 <TextInput
                     style={styles.inputField}
                     onChangeText={setEmail}
@@ -179,7 +179,7 @@ const ProfileEditPage = () => {
                 <Text style={styles.textError}>{emailError}</Text>
             </View>
             <View style={styles.inputContainer}>
-                <Text style={styles.inputLabel}>Nouveau mot de passe :</Text>
+                <Text style={styles.inputLabel}>New Password :</Text>
                 <TextInput
                     style={styles.inputField}
                     onChangeText={setPassword}
@@ -189,7 +189,7 @@ const ProfileEditPage = () => {
                 <Text style={styles.textError}>{passwordError}</Text>
             </View>
             <View style={styles.inputContainer}>
-                <Text style={styles.inputLabel}>Confirmez le nouveau mot de passe :</Text>
+                <Text style={styles.inputLabel}>Confirm password :</Text>
                 <TextInput
                     style={styles.inputField}
                     onChangeText={setConfirmPassword}
@@ -198,9 +198,11 @@ const ProfileEditPage = () => {
                 />
                 <Text style={styles.textError}></Text>
             </View>
-            <Pressable style={styles.saveChangesButton} onPress={handleChanges}>
-                <Text>Sauvegarder les modifications</Text>
-            </Pressable>
+            <View style={{display: 'flex', alignItems: 'center'}}>
+                <Pressable style={styles.saveChangesButton} onPress={handleChanges}>
+                    <Text style={{color: '#242429'}}>Save changes</Text>
+                </Pressable>
+            </View>
         </View>
     );
 };
@@ -208,6 +210,7 @@ const ProfileEditPage = () => {
 const styles = StyleSheet.create({
     background: {
         width: '100%',
+        height: '100%',
         display: 'flex',
         backgroundColor: '#242429',
         padding: 20,
@@ -235,7 +238,7 @@ const styles = StyleSheet.create({
         width: 110,
         height: 110,
         borderStyle: 'solid',
-        borderWidth: 5,
+        borderWidth: 3,
         borderRadius: 100,
         borderColor: 'black',
     },
@@ -244,13 +247,13 @@ const styles = StyleSheet.create({
         borderRadius: 100,
     },
     imageSelectionButton: {
+        alignItems: 'center',
+        backgroundColor: '#4EF5B9',
+        marginTop: 10,
         marginLeft: 20,
-        color: 'white',
-        padding: 10,
-        borderRadius: 20,
-        backgroundColor: 'orange',
-        alignSelf: 'center',
-        textAlign: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 30,
+        borderRadius: 10,
     },
     inputContainer: {
         marginVertical: 10,
@@ -276,14 +279,13 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     saveChangesButton: {
-        color: 'white',
-        margin: 10,
-        padding: 10,
-        width: '60%',
-        borderRadius: 20,
-        backgroundColor: 'orange',
-        alignSelf: 'center',
-        textAlign: 'center',
+        alignItems: 'center',
+        backgroundColor: '#4EF5B9',
+        marginTop: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 30,
+        borderRadius: 10,
+        width: '50%',
     },
 });
 

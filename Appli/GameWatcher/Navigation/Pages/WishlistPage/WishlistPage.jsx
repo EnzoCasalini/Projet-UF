@@ -11,9 +11,9 @@ const WishlistPage = ({navigation}) => {
             <FavoriteGamesList navigation={navigation} />
             {!userId && (
                 <View style={styles.loginMessageContainer}>
-                    <Text style={styles.loginMessageText}>Veuillez vous connecter pour utiliser cette fonctionnalité</Text>
+                    <Text style={styles.loginMessageText}>You need to connect to use this functionality</Text>
                     <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                        <Text style={styles.loginLink}>Se connecter</Text>
+                        <Text style={styles.loginLink}>Log in</Text>
                     </TouchableOpacity>
                 </View>
             )}

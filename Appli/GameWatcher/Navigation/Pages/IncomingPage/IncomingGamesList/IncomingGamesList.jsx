@@ -66,7 +66,7 @@ const IncomingGamesList = ({navigation}) => {
                     ListFooterComponent={isLoading ? <ActivityIndicator size="large" color="#C9FAE8" style={{paddingTop: 20}} /> : null}
                 />
             ) : (
-                <Text style={styles.noGameText}>Aucune sortie prévue dans les mois à venir !</Text>
+                <Text style={styles.noGameText}>No upcoming releases planned in the coming months !</Text>
             )}
         </>
     );
