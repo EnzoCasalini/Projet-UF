@@ -1,25 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
+import {auth} from "./firebaseConfig";
+import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const PrivateRoute = ({element: Element}) => {
+    const isAuthenticated = auth.currentUser !== null;
+
+    if (!isAuthenticated) {
+        return <Navigate to="/"/>;
+    }
+
+    return <Element/>;
+};
+
+const App = () => {
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route
+                    path="/"
+                    element={<LoginPage/>}
+                />
+                <Route
+                    path="/home"
+                    element={<PrivateRoute element={HomePage}/>}
+                />
+            </Routes>
+        </BrowserRouter>
+    );
+};
 
 export default App;
